@@ -25,3 +25,9 @@ def bmi(request):
             bmi = None
             status = 'ข้อมูลไม่ถูกต้อง'
     return render(request, 'bmi.html', {'bmi': bmi, 'status': status})
+
+def nutrition(request):
+    return render(request, 'nutrition.html')
+
+def profile(request):
+    return render(request, 'profile.html')
