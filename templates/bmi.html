@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}คำนวณ BMI - CodeFitKub{% endblock %}
+
+{% block extra_head %}
+<style>
+    .bmi-form { max-width: 400px; margin: 0 auto; background: #f0f8ff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px #0001; }
+    .bmi-form label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #008080; }
+    .bmi-form input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border-radius: 6px; border: 1px solid #ccc; }
+    .bmi-form button { background: #008080; color: #fff; border: none; padding: 0.7rem 1.5rem; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    .bmi-form button:hover { background: #005f5f; }
+    .bmi-result { text-align: center; margin-top: 2rem; }
+    .bmi-result h2 { color: #008080; font-size: 2rem; }
+    .bmi-result p { font-size: 1.2rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 style="color:#008080; text-align:center;">คำนวณ BMI</h1>
+<form method="post" class="bmi-form">
+    {% csrf_token %}
+    <label for="height">ความสูง (cm):</label>
+    <input type="number" name="height" step="0.1" required placeholder="เช่น 170">
+    <label for="weight">น้ำหนัก (kg):</label>
+    <input type="number" name="weight" step="0.1" required placeholder="เช่น 65">
+    <button type="submit">คำนวณ BMI</button>
+</form>
+{% if bmi %}
+    <div class="bmi-result">
+        <h2>ค่าดัชนีมวลกาย (BMI): {{ bmi }}</h2>
+        <p>สถานะน้ำหนัก: <strong>{{ status }}</strong></p>
+        <p style="color:#555; max-width:700px; margin:0.5rem auto">หมายเหตุ: BMI เป็นตัวชี้วัดเบื้องต้น ไม่สามารถทดแทนการวัดองค์ประกอบร่างกายหรือคำปรึกษาจากผู้เชี่ยวชาญได้</p>
+    </div>
+{% endif %}
+{% endblock %}
