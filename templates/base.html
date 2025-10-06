@@ -8,7 +8,7 @@
 		* { margin: 0; padding: 0; box-sizing: border-box; }
 		body {
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			background: linear-gradient(135deg, #24347d 0%, #d5cde0 100%);
 			min-height: 100vh;
 			padding: 20px;
 			color: #222;
@@ -119,15 +119,23 @@
 </head>
 <body>
 	<nav>
-		<div class="nav-links">
-			<a href="{% url 'home' %}">หน้าแรก</a>
-			<a href="{% url 'bmi' %}">คำนวณ BMI</a>
-			<a href="{% url 'nutrition' %}">โภชนาการ</a>
-			<a href="{% url 'profile' %}">โปรไฟล์</a>
-			<a href="{% url 'login' %}">เข้าสู่ระบบ</a>
-			<a href="{% url 'register' %}">สมัครสมาชิก</a>
-			
+		<div class="page">
+		<header class="site-header">
+			<div class="brand">
+				<a href="{% url 'home' %}" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+					<span class="title">CodeFitKub</span>
+				</a>
+			</div>
+			<nav style="position:relative;">
+				<div class="nav-links" role="navigation" aria-label="Main navigation">
+					<a href="{% url 'home' %}">หน้าแรก</a>
+					<a href="{% url 'bmi' %}">คำนวณ BMI</a>
+					<a href="{% url 'nutrition' %}">โภชนาการ</a>
+					<a href="{% url 'profile' %}">โปรไฟล์</a>
+					<a href="{% url 'login' %}">เข้าสู่ระบบ</a>
+					<a href="{% url 'register' %}" class="primary">สมัครสมาชิก</a>
 		</div>
+	</nav>
 		{% if user.is_authenticated %}
 		<div class="user-info">
 			<span class="username">👤 {{ user.username }}</span>
