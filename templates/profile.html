@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}ระบบบันทึกการออกกำลังกาย - CodeFitKub{% endblock %}
+{% block title %}ระบบจัดการ - CodeFitKub{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -60,7 +60,7 @@
     }
     textarea {
         resize: vertical;
-        min-height: 100px;
+        min-height: 80px;
     }
     .btn {
         padding: 12px 30px;
@@ -84,51 +84,32 @@
         color: white;
     }
     .btn-danger:hover { background: #c82333; }
-    .btn-success {
-        background: #28a745;
-        color: white;
-    }
-    .btn-success:hover { background: #218838; }
-    .exercise-list {
+    .item-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
         margin-top: 20px;
     }
-    .exercise-card {
+    .item-card {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        padding: 20px;
+        padding: 25px;
         border-radius: 12px;
         border-left: 5px solid #667eea;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
     }
-    .exercise-card:hover { transform: translateX(5px); }
-    .exercise-card h3 {
+    .item-card:hover { 
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .item-card h3 {
         color: #667eea;
-        margin-bottom: 10px;
-    }
-    .exercise-card p {
-        margin: 5px 0;
-        color: #555;
-    }
-    .log-item {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
         margin-bottom: 15px;
-        border-left: 5px solid #28a745;
+        font-size: 1.3em;
     }
-    .log-item h4 {
-        color: #667eea;
-        margin-bottom: 10px;
-    }
-    .log-exercises {
-        margin-top: 10px;
-        padding-left: 20px;
-    }
-    .log-exercises li {
-        margin: 5px 0;
+    .item-card p {
+        margin: 8px 0;
         color: #555;
+        line-height: 1.6;
     }
     .stats-grid {
         display: grid;
@@ -151,62 +132,113 @@
         font-size: 1.1em;
         opacity: 0.9;
     }
-    .exercise-form-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
+    .log-item {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border-left: 5px solid #28a745;
+    }
+    .log-item h4 {
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    .badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        margin: 3px;
+        background: #667eea;
+        color: white;
+    }
+    .empty-message {
+        text-align: center;
+        padding: 40px 20px;
+        color: #999;
+        font-size: 1.1em;
     }
     @media (max-width: 768px) {
         .nav-tabs { flex-direction: column; }
         .tab-btn { width: 100%; }
-        .exercise-list { grid-template-columns: 1fr; }
+        .item-grid { grid-template-columns: 1fr; }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<h1>💪 ระบบบันทึกการออกกำลังกาย</h1>
-<p class="subtitle">จัดการโปรแกรมและติดตามประวัติการออกกำลังกาย</p>
+<h1>💪 ระบบจัดการออกกำลังกาย</h1>
+<p class="subtitle">จัดการโปรแกรม ท่าออกกำลังกาย และดูประวัติการออกกำลังกาย</p>
 
 <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('exercises')">🏋️ ท่าออกกำลังกาย</button>
-    <button class="tab-btn" onclick="switchTab('programs')">📋 โปรแกรมออกกำลังกาย</button>
-    <button class="tab-btn" onclick="switchTab('log')">✏️ บันทึกการออกกำลัง</button>
+    <button class="tab-btn active" onclick="switchTab('programs')">📋 โปรแกรมออกกำลังกาย</button>
+    <button class="tab-btn" onclick="switchTab('exercises')">🏋️ ท่าออกกำลังกาย</button>
     <button class="tab-btn" onclick="switchTab('history')">📊 ประวัติการออกกำลัง</button>
 </div>
 
+<!-- แท็บโปรแกรมออกกำลังกาย -->
+<div id="programs" class="tab-content active">
+    <div class="card">
+        <h2>➕ สร้างโปรแกรมออกกำลังกาย</h2>
+        <form id="programForm" onsubmit="addProgram(event)">
+            <div class="form-group">
+                <label>ชื่อโปรแกรม *</label>
+                <input type="text" id="programName" required placeholder="เช่น โปรแกรมลดน้ำหนัก 30 วัน">
+            </div>
+            <div class="form-group">
+                <label>วัตถุประสงค์</label>
+                <select id="programGoal">
+                    <option value="ลดน้ำหนัก">ลดน้ำหนัก</option>
+                    <option value="เพิ่มกล้ามเนื้อ">เพิ่มกล้ามเนื้อ</option>
+                    <option value="เสริมความแข็งแรง">เสริมความแข็งแรง</option>
+                    <option value="เพิ่มความอดทน">เพิ่มความอดทน</option>
+                    <option value="ยืดหยุ่น">เพิ่มความยืดหยุ่น</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>คำอธิบาย</label>
+                <textarea id="programDescription" placeholder="อธิบายรายละเอียดโปรแกรม..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">สร้างโปรแกรม</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>📋 โปรแกรมทั้งหมด</h2>
+        <div id="programList" class="item-grid"></div>
+    </div>
+</div>
+
 <!-- แท็บท่าออกกำลังกาย -->
-<div id="exercises" class="tab-content active">
+<div id="exercises" class="tab-content">
     <div class="card">
         <h2>➕ เพิ่มท่าออกกำลังกายใหม่</h2>
         <form id="exerciseForm" onsubmit="addExercise(event)">
-            <div class="exercise-form-container">
-                <div class="form-group">
-                    <label>ชื่อท่าออกกำลังกาย *</label>
-                    <input type="text" id="exerciseName" required>
-                </div>
-                <div class="form-group">
-                    <label>ประเภท *</label>
-                    <select id="exerciseType" required>
-                        <option value="">-- เลือกประเภท --</option>
-                        <option value="แขน">แขน</option>
-                        <option value="ขา">ขา</option>
-                        <option value="อก">อก</option>
-                        <option value="หลัง">หลัง</option>
-                        <option value="ไหล่">ไหล่</option>
-                        <option value="หน้าท้อง">หน้าท้อง</option>
-                        <option value="คาร์ดิโอ">คาร์ดิโอ</option>
-                        <option value="ยืดเหยียด">ยืดเหยียด</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>ระดับความยาก *</label>
-                    <select id="exerciseDifficulty" required>
-                        <option value="เริ่มต้น">เริ่มต้น</option>
-                        <option value="ปานกลาง">ปานกลาง</option>
-                        <option value="ยาก">ยาก</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>ชื่อท่าออกกำลังกาย *</label>
+                <input type="text" id="exerciseName" required placeholder="เช่น วิดพื้น, สควอต">
+            </div>
+            <div class="form-group">
+                <label>ประเภท *</label>
+                <select id="exerciseType" required>
+                    <option value="">-- เลือกประเภท --</option>
+                    <option value="แขน">แขน</option>
+                    <option value="ขา">ขา</option>
+                    <option value="อก">อก</option>
+                    <option value="หลัง">หลัง</option>
+                    <option value="ไหล่">ไหล่</option>
+                    <option value="หน้าท้อง">หน้าท้อง</option>
+                    <option value="คาร์ดิโอ">คาร์ดิโอ</option>
+                    <option value="ยืดเหยียด">ยืดเหยียด</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>ระดับความยาก *</label>
+                <select id="exerciseDifficulty" required>
+                    <option value="เริ่มต้น">เริ่มต้น</option>
+                    <option value="ปานกลาง">ปานกลาง</option>
+                    <option value="ยาก">ยาก</option>
+                </select>
             </div>
             <div class="form-group">
                 <label>คำอธิบาย</label>
@@ -217,7 +249,7 @@
     </div>
 
     <div class="card">
-        <h2>📚 รายการท่าออกกำลังกาย</h2>
+        <h2>🏋️ ท่าออกกำลังกายทั้งหมด</h2>
         <div class="form-group">
             <label>กรองตามประเภท</label>
             <select id="filterType" onchange="filterExercises()">
@@ -232,106 +264,17 @@
                 <option value="ยืดเหยียด">ยืดเหยียด</option>
             </select>
         </div>
-        <div id="exerciseList" class="exercise-list"></div>
-    </div>
-</div>
-
-<!-- แท็บโปรแกรมออกกำลังกาย -->
-<div id="programs" class="tab-content">
-    <div class="card">
-        <h2>➕ สร้างโปรแกรมออกกำลังกาย</h2>
-        <form id="programForm" onsubmit="addProgram(event)">
-            <div class="form-group">
-                <label>ชื่อโปรแกรม *</label>
-                <input type="text" id="programName" required>
-            </div>
-            <div class="form-group">
-                <label>วัตถุประสงค์</label>
-                <select id="programGoal">
-                    <option value="ลดน้ำหนัก">ลดน้ำหนัก</option>
-                    <option value="เพิ่มกล้ามเนื้อ">เพิ่มกล้ามเนื้อ</option>
-                    <option value="เสริมความแข็งแรง">เสริมความแข็งแรง</option>
-                    <option value="เพิ่มความอดทน">เพิ่มความอดทน</option>
-                    <option value="ยืดหยุ่น">เพิ่มความยืดหยุ่น</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>เลือกท่าออกกำลังกาย (กด Ctrl เพื่อเลือกหลายท่า)</label>
-                <select id="programExercises" multiple size="8" style="height: auto;"></select>
-            </div>
-            <div class="form-group">
-                <label>คำอธิบายโปรแกรม</label>
-                <textarea id="programDescription"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">สร้างโปรแกรม</button>
-        </form>
-    </div>
-
-    <div class="card">
-        <h2>📋 โปรแกรมที่มีอยู่</h2>
-        <div id="programList" class="exercise-list"></div>
-    </div>
-</div>
-
-<!-- แท็บบันทึกการออกกำลัง -->
-<div id="log" class="tab-content">
-    <div class="card">
-        <h2>✏️ บันทึกการออกกำลังกายวันนี้</h2>
-        <form id="logForm" onsubmit="addWorkoutLog(event)">
-            <div class="form-group">
-                <label>เลือกสมาชิก *</label>
-                <select id="logMember" required>
-                    <option value="">-- เลือกสมาชิก --</option>
-                </select>
-                <button type="button" class="btn btn-success" style="margin-top: 10px;" onclick="addNewMember()">➕ เพิ่มสมาชิกใหม่</button>
-            </div>
-
-            <div class="form-group">
-                <label>วันที่ออกกำลังกาย *</label>
-                <input type="date" id="logDate" required>
-            </div>
-
-            <div class="form-group">
-                <label>เวลาที่ใช้ (นาที) *</label>
-                <input type="number" id="logDuration" min="1" required>
-            </div>
-
-            <div class="form-group">
-                <label>เลือกโปรแกรม (ถ้ามี)</label>
-                <select id="logProgram">
-                    <option value="">-- ไม่เลือกโปรแกรม --</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>เลือกท่าออกกำลังกายที่ทำ *</label>
-                <div id="logExercisesContainer"></div>
-            </div>
-
-            <div class="form-group">
-                <label>บันทึกเพิ่มเติม</label>
-                <textarea id="logNotes" placeholder="ความรู้สึก, พลังงาน, ปัญหาที่พบ..."></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">บันทึกการออกกำลัง</button>
-        </form>
+        <div id="exerciseList" class="item-grid"></div>
     </div>
 </div>
 
 <!-- แท็บประวัติ -->
 <div id="history" class="tab-content">
-    <div class="card">
-        <h2>📊 เลือกสมาชิกเพื่อดูประวัติ</h2>
-        <div class="form-group">
-            <label>เลือกสมาชิก</label>
-            <select id="historyMember" onchange="showMemberHistory()">
-                <option value="">-- เลือกสมาชิก --</option>
-            </select>
-        </div>
-    </div>
-
     <div id="statsContainer"></div>
-    <div id="historyContainer"></div>
+    <div class="card">
+        <h2>📝 ประวัติการออกกำลังกาย</h2>
+        <div id="historyContainer"></div>
+    </div>
 </div>
 {% endblock %}
 
@@ -340,36 +283,39 @@
     let exercises = [];
     let programs = [];
     let workoutLogs = [];
-    let members = ['สมาชิก 1', 'สมาชิก 2', 'สมาชิก 3'];
 
     window.onload = function() {
-        loadSampleData();
+        loadData();
         updateExerciseList();
         updateProgramList();
-        updateMemberSelects();
-        updateLogExercises();
-        updateProgramExercisesSelect();
-        document.getElementById('logDate').valueAsDate = new Date();
+        showHistory();
     };
 
-    function loadSampleData() {
-        exercises = [
-            {id: 1, name: 'วิดพื้น', type: 'อก', difficulty: 'เริ่มต้น', description: 'วิดพื้นแบบพื้นฐาน เน้นกล้ามเนื้ออก'},
-            {id: 2, name: 'ซิทอัพ', type: 'หน้าท้อง', difficulty: 'เริ่มต้น', description: 'เสริมสร้างกล้ามเนื้อหน้าท้อง'},
-            {id: 3, name: 'สควอต', type: 'ขา', difficulty: 'ปานกลาง', description: 'เสริมสร้างกล้ามเนื้อขาและสะโพก'},
-            {id: 4, name: 'วิ่งเหยาะ', type: 'คาร์ดิโอ', difficulty: 'เริ่มต้น', description: 'วิ่งเหยาะที่จุดเพื่อเพิ่มอัตราการเต้นของหัวใจ'},
-            {id: 5, name: 'ดัมเบลเคิร์ล', type: 'แขน', difficulty: 'ปานกลาง', description: 'ยกกล้ามเนื้อ biceps ด้วยดัมเบล'}
-        ];
+    function loadData() {
+        // โหลดข้อมูลจาก localStorage
+        exercises = JSON.parse(localStorage.getItem('exercises') || '[]');
+        programs = JSON.parse(localStorage.getItem('programs') || '[]');
+        workoutLogs = JSON.parse(localStorage.getItem('workoutLogs') || '[]');
 
-        programs = [
-            {id: 1, name: 'โปรแกรมลดน้ำหนัก', goal: 'ลดน้ำหนัก', exercises: [1, 2, 4], description: 'โปรแกรมสำหรับผู้เริ่มต้นที่ต้องการลดน้ำหนัก'},
-            {id: 2, name: 'โปรแกรมเพิ่มกล้ามเนื้อ', goal: 'เพิ่มกล้ามเนื้อ', exercises: [1, 3, 5], description: 'เน้นการสร้างกล้ามเนื้อทั่วร่างกาย'}
-        ];
+        // ถ้าไม่มีข้อมูล ใส่ข้อมูลตัวอย่าง
+        if(exercises.length === 0) {
+            exercises = [
+                {id: 1, name: 'วิดพื้น', type: 'อก', difficulty: 'เริ่มต้น', description: 'วิดพื้นแบบพื้นฐาน เน้นกล้ามเนื้ออก'},
+                {id: 2, name: 'ซิทอัพ', type: 'หน้าท้อง', difficulty: 'เริ่มต้น', description: 'เสริมสร้างกล้ามเนื้อหน้าท้อง'},
+                {id: 3, name: 'สควอต', type: 'ขา', difficulty: 'ปานกลาง', description: 'เสริมสร้างกล้ามเนื้อขาและสะโพก'},
+                {id: 4, name: 'วิ่งเหยาะ', type: 'คาร์ดิโอ', difficulty: 'เริ่มต้น', description: 'วิ่งเหยาะที่จุดเพื่อเพิ่มอัตราการเต้นของหัวใจ'},
+                {id: 5, name: 'ดัมเบลเคิร์ล', type: 'แขน', difficulty: 'ปานกลาง', description: 'ยกกล้ามเนื้อ biceps ด้วยดัมเบล'}
+            ];
+            localStorage.setItem('exercises', JSON.stringify(exercises));
+        }
 
-        workoutLogs = [
-            {id: 1, member: 'สมาชิก 1', date: '2025-10-01', duration: 45, exercises: [{id:1,sets:3,reps:10,weight:0},{id:2,sets:3,reps:15,weight:0},{id:4,sets:1,reps:10,weight:0}], notes: 'รู้สึกดี มีพลัง', programId: 1},
-            {id: 2, member: 'สมาชิก 1', date: '2025-10-03', duration: 50, exercises: [{id:1,sets:3,reps:12,weight:0},{id:3,sets:3,reps:12,weight:20},{id:5,sets:3,reps:10,weight:5}], notes: 'เริ่มปวดกล้ามเนื้อบ้าง', programId: 2}
-        ];
+        if(programs.length === 0) {
+            programs = [
+                {id: 1, name: 'โปรแกรมลดน้ำหนัก', goal: 'ลดน้ำหนัก', description: 'โปรแกรมสำหรับผู้เริ่มต้นที่ต้องการลดน้ำหนัก'},
+                {id: 2, name: 'โปรแกรมเพิ่มกล้ามเนื้อ', goal: 'เพิ่มกล้ามเนื้อ', description: 'เน้นการสร้างกล้ามเนื้อทั่วร่างกาย'}
+            ];
+            localStorage.setItem('programs', JSON.stringify(programs));
+        }
     }
 
     function switchTab(tabName) {
@@ -377,21 +323,21 @@
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(tabName).classList.add('active');
         event.target.classList.add('active');
-        if(tabName === 'history') showMemberHistory();
+        if(tabName === 'history') showHistory();
     }
 
     function addExercise(e) {
         e.preventDefault();
-        exercises.push({
+        const newExercise = {
             id: Date.now(),
             name: document.getElementById('exerciseName').value,
             type: document.getElementById('exerciseType').value,
             difficulty: document.getElementById('exerciseDifficulty').value,
             description: document.getElementById('exerciseDescription').value
-        });
+        };
+        exercises.push(newExercise);
+        localStorage.setItem('exercises', JSON.stringify(exercises));
         updateExerciseList();
-        updateLogExercises();
-        updateProgramExercisesSelect();
         document.getElementById('exerciseForm').reset();
         alert('เพิ่มท่าออกกำลังกายสำเร็จ! ✅');
     }
@@ -399,206 +345,131 @@
     function updateExerciseList() {
         const filterType = document.getElementById('filterType')?.value || '';
         const filtered = filterType ? exercises.filter(ex => ex.type === filterType) : exercises;
+        
+        if(filtered.length === 0) {
+            document.getElementById('exerciseList').innerHTML = '<div class="empty-message">ยังไม่มีท่าออกกำลังกาย</div>';
+            return;
+        }
+
         document.getElementById('exerciseList').innerHTML = filtered.map(ex => `
-            <div class="exercise-card">
+            <div class="item-card">
                 <h3>🏋️ ${ex.name}</h3>
-                <p><strong>ประเภท:</strong> ${ex.type}</p>
-                <p><strong>ระดับ:</strong> ${ex.difficulty}</p>
+                <p><strong>ประเภท:</strong> <span class="badge">${ex.type}</span></p>
+                <p><strong>ระดับ:</strong> <span class="badge">${ex.difficulty}</span></p>
                 <p>${ex.description || 'ไม่มีคำอธิบาย'}</p>
                 <button class="btn btn-danger" style="margin-top: 10px;" onclick="deleteExercise(${ex.id})">🗑️ ลบ</button>
             </div>
-        `).join('') || '<p style="text-align: center; padding: 20px;">ยังไม่มีท่าออกกำลังกาย</p>';
+        `).join('');
     }
 
-    function filterExercises() { updateExerciseList(); }
+    function filterExercises() { 
+        updateExerciseList(); 
+    }
 
     function deleteExercise(id) {
         if(confirm('คุณต้องการลบท่านี้หรือไม่?')) {
             exercises = exercises.filter(ex => ex.id !== id);
+            localStorage.setItem('exercises', JSON.stringify(exercises));
             updateExerciseList();
-            updateLogExercises();
-            updateProgramExercisesSelect();
         }
     }
 
     function addProgram(e) {
         e.preventDefault();
-        const selected = Array.from(document.getElementById('programExercises').selectedOptions).map(o => parseInt(o.value));
-        if(selected.length === 0) return alert('กรุณาเลือกท่าออกกำลังกายอย่างน้อย 1 ท่า');
-        
-        programs.push({
+        const newProgram = {
             id: Date.now(),
             name: document.getElementById('programName').value,
             goal: document.getElementById('programGoal').value,
-            exercises: selected,
             description: document.getElementById('programDescription').value
-        });
+        };
+        programs.push(newProgram);
+        localStorage.setItem('programs', JSON.stringify(programs));
         updateProgramList();
-        updateLogProgramSelect();
         document.getElementById('programForm').reset();
         alert('สร้างโปรแกรมสำเร็จ! ✅');
     }
 
     function updateProgramList() {
+        if(programs.length === 0) {
+            document.getElementById('programList').innerHTML = '<div class="empty-message">ยังไม่มีโปรแกรม</div>';
+            return;
+        }
+
         document.getElementById('programList').innerHTML = programs.map(p => `
-            <div class="exercise-card">
+            <div class="item-card">
                 <h3>📋 ${p.name}</h3>
-                <p><strong>วัตถุประสงค์:</strong> ${p.goal}</p>
-                <p><strong>ท่าออกกำลังกาย:</strong> ${p.exercises.map(id => exercises.find(e => e.id === id)?.name || 'ไม่พบข้อมูล').join(', ')}</p>
+                <p><strong>วัตถุประสงค์:</strong> <span class="badge">${p.goal}</span></p>
                 <p>${p.description || 'ไม่มีคำอธิบาย'}</p>
                 <button class="btn btn-danger" style="margin-top: 10px;" onclick="deleteProgram(${p.id})">🗑️ ลบ</button>
             </div>
-        `).join('') || '<p style="text-align: center; padding: 20px;">ยังไม่มีโปรแกรม</p>';
+        `).join('');
     }
 
     function deleteProgram(id) {
         if(confirm('คุณต้องการลบโปรแกรมนี้หรือไม่?')) {
             programs = programs.filter(p => p.id !== id);
+            localStorage.setItem('programs', JSON.stringify(programs));
             updateProgramList();
-            updateLogProgramSelect();
         }
     }
 
-    function updateProgramExercisesSelect() {
-        document.getElementById('programExercises').innerHTML = exercises.map(ex => 
-            `<option value="${ex.id}">${ex.name} (${ex.type})</option>`
-        ).join('');
-    }
-
-    function updateMemberSelects() {
-        ['logMember', 'historyMember'].forEach(id => {
-            const sel = document.getElementById(id);
-            const val = sel.value;
-            sel.innerHTML = '<option value="">-- เลือกสมาชิก --</option>' + members.map(m => `<option value="${m}">${m}</option>`).join('');
-            if(val) sel.value = val;
-        });
-    }
-
-    function addNewMember() {
-        const name = prompt('กรุณาใส่ชื่อสมาชิกใหม่:');
-        if(name && name.trim()) {
-            members.push(name.trim());
-            updateMemberSelects();
-            alert('เพิ่มสมาชิกสำเร็จ! ✅');
-        }
-    }
-
-    function updateLogExercises() {
-        document.getElementById('logExercisesContainer').innerHTML = exercises.map(ex => `
-            <div style="margin: 8px 0;">
-                <label style="display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" name="logExercises" value="${ex.id}" style="width: auto; margin-right: 10px;">
-                    ${ex.name} (${ex.type})
-                </label>
-                <div style="margin-left: 30px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 5px;">
-                    <input type="number" placeholder="เซ็ต" min="1" id="sets_${ex.id}" style="padding: 5px;">
-                    <input type="number" placeholder="ครั้ง/เซ็ต" min="1" id="reps_${ex.id}" style="padding: 5px;">
-                    <input type="number" placeholder="น้ำหนัก (kg)" min="0" step="0.5" id="weight_${ex.id}" style="padding: 5px;">
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function updateLogProgramSelect() {
-        document.getElementById('logProgram').innerHTML = '<option value="">-- ไม่เลือกโปรแกรม --</option>' +
-            programs.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
-    }
-
-    function addWorkoutLog(e) {
-        e.preventDefault();
-        const member = document.getElementById('logMember').value;
-        if(!member) return alert('กรุณาเลือกสมาชิก');
-
-        const selected = Array.from(document.querySelectorAll('input[name="logExercises"]:checked')).map(cb => ({
-            id: parseInt(cb.value),
-            sets: document.getElementById(`sets_${cb.value}`)?.value || 0,
-            reps: document.getElementById(`reps_${cb.value}`)?.value || 0,
-            weight: document.getElementById(`weight_${cb.value}`)?.value || 0
-        }));
-
-        if(selected.length === 0) return alert('กรุณาเลือกท่าออกกำลังกายอย่างน้อย 1 ท่า');
-
-        workoutLogs.push({
-            id: Date.now(),
-            member: member,
-            date: document.getElementById('logDate').value,
-            duration: parseInt(document.getElementById('logDuration').value),
-            exercises: selected,
-            programId: document.getElementById('logProgram').value ? parseInt(document.getElementById('logProgram').value) : null,
-            notes: document.getElementById('logNotes').value
-        });
-
-        document.getElementById('logForm').reset();
-        document.getElementById('logDate').valueAsDate = new Date();
-        updateLogExercises();
-        alert('บันทึกการออกกำลังกายสำเร็จ! ✅');
-    }
-
-    function showMemberHistory() {
-        const member = document.getElementById('historyMember').value;
-        if(!member) {
+    function showHistory() {
+        workoutLogs = JSON.parse(localStorage.getItem('workoutLogs') || '[]');
+        
+        if(workoutLogs.length === 0) {
             document.getElementById('statsContainer').innerHTML = '';
-            document.getElementById('historyContainer').innerHTML = '';
+            document.getElementById('historyContainer').innerHTML = '<div class="empty-message">ยังไม่มีประวัติการออกกำลังกาย<br>ไปที่หน้าหลักเพื่อเริ่มบันทึกการออกกำลังกาย</div>';
             return;
         }
 
-        const logs = workoutLogs.filter(l => l.member === member);
-        if(logs.length === 0) {
-            document.getElementById('statsContainer').innerHTML = '';
-            document.getElementById('historyContainer').innerHTML = '<div class="card"><p style="text-align: center; padding: 20px;">ยังไม่มีประวัติการออกกำลังกาย</p></div>';
-            return;
-        }
-
-        const totalWorkouts = logs.length;
-        const totalMinutes = logs.reduce((s, l) => s + l.duration, 0);
+        // แสดงสถิติ
+        const totalWorkouts = workoutLogs.length;
         const exCount = {};
-        logs.forEach(l => l.exercises.forEach(ex => exCount[ex.id] = (exCount[ex.id] || 0) + 1));
-        const mostPopular = Object.keys(exCount).length > 0 ? exercises.find(e => e.id == Object.keys(exCount).reduce((a, b) => exCount[a] > exCount[b] ? a : b))?.name || '-' : '-';
+        workoutLogs.forEach(log => {
+            exCount[log.exercise] = (exCount[log.exercise] || 0) + 1;
+        });
+        const mostPopular = Object.keys(exCount).length > 0 ? 
+            Object.keys(exCount).reduce((a, b) => exCount[a] > exCount[b] ? a : b) : '-';
+        
+        const totalSets = workoutLogs.reduce((sum, log) => sum + parseInt(log.sets || 0), 0);
+        const totalReps = workoutLogs.reduce((sum, log) => sum + parseInt(log.reps || 0), 0);
 
         document.getElementById('statsContainer').innerHTML = `
             <div class="stats-grid">
                 <div class="stat-card"><h3>${totalWorkouts}</h3><p>ครั้งทั้งหมด</p></div>
-                <div class="stat-card"><h3>${totalMinutes}</h3><p>นาทีทั้งหมด</p></div>
-                <div class="stat-card"><h3>${Math.round(totalMinutes / totalWorkouts)}</h3><p>นาทีเฉลี่ย/ครั้ง</p></div>
-                <div class="stat-card"><h3 style="font-size: 1.5em;">${mostPopular}</h3><p>ท่าที่ทำบ่อยที่สุด</p></div>
+                <div class="stat-card"><h3>${totalSets}</h3><p>เซ็ตทั้งหมด</p></div>
+                <div class="stat-card"><h3>${totalReps}</h3><p>ครั้งทั้งหมด</p></div>
+                <div class="stat-card"><h3 style="font-size: 1.3em;">${mostPopular}</h3><p>ท่าที่ทำบ่อยที่สุด</p></div>
             </div>
         `;
 
-        document.getElementById('historyContainer').innerHTML = `
-            <div class="card">
-                <h2>📝 ประวัติการออกกำลังกาย</h2>
-                <div class="workout-log">
-                    ${logs.sort((a, b) => new Date(b.date) - new Date(a.date)).map(log => {
-                        const prog = log.programId ? programs.find(p => p.id === log.programId) : null;
-                        return `
-                            <div class="log-item">
-                                <h4>📅 ${new Date(log.date).toLocaleDateString('th-TH', {year: 'numeric', month: 'long', day: 'numeric'})} - ⏱️ ${log.duration} นาที</h4>
-                                ${prog ? `<p><strong>โปรแกรม:</strong> ${prog.name}</p>` : ''}
-                                <p><strong>ท่าที่ทำ:</strong></p>
-                                <ul class="log-exercises">
-                                    ${log.exercises.map(ex => {
-                                        const exercise = exercises.find(e => e.id === ex.id);
-                                        const details = [];
-                                        if(ex.sets > 0) details.push(`${ex.sets} เซ็ต`);
-                                        if(ex.reps > 0) details.push(`${ex.reps} ครั้ง`);
-                                        if(ex.weight > 0) details.push(`${ex.weight} kg`);
-                                        return `<li>${exercise?.name || 'ไม่ทราบชื่อ'}${details.length > 0 ? ' - ' + details.join(', ') : ''}</li>`;
-                                    }).join('')}
-                                </ul>
-                                ${log.notes ? `<p><strong>บันทึก:</strong> ${log.notes}</p>` : ''}
-                                <button class="btn btn-danger" style="margin-top: 10px;" onclick="deleteLog(${log.id})">🗑️ ลบบันทึก</button>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-            </div>
-        `;
+        // แสดงประวัติ
+        document.getElementById('historyContainer').innerHTML = workoutLogs
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map(log => {
+                const date = new Date(log.date);
+                const details = [];
+                if(log.sets > 0) details.push(`${log.sets} เซ็ต`);
+                if(log.reps > 0) details.push(`${log.reps} ครั้ง`);
+                if(log.weight > 0) details.push(`${log.weight} kg`);
+                
+                return `
+                    <div class="log-item">
+                        <h4>🏋️ ${log.exercise}</h4>
+                        <p><strong>📅 วันที่:</strong> ${date.toLocaleDateString('th-TH', {year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'})}</p>
+                        ${details.length > 0 ? `<p><strong>รายละเอียด:</strong> ${details.join(' | ')}</p>` : ''}
+                        ${log.note ? `<p><strong>บันทึก:</strong> ${log.note}</p>` : ''}
+                        <button class="btn btn-danger" style="margin-top: 10px;" onclick="deleteLog(${log.id})">🗑️ ลบบันทึก</button>
+                    </div>
+                `;
+            }).join('');
     }
 
     function deleteLog(id) {
         if(confirm('คุณต้องการลบบันทึกนี้หรือไม่?')) {
             workoutLogs = workoutLogs.filter(l => l.id !== id);
-            showMemberHistory();
+            localStorage.setItem('workoutLogs', JSON.stringify(workoutLogs));
+            showHistory();
             alert('ลบบันทึกสำเร็จ! ✅');
         }
     }

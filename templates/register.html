@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}สมัครสมาชิก - CodeFitKub{% endblock %}
+
+{% block content %}
+<div style="max-width:520px;margin:30px auto;">
+    <h1 style="text-align:center;color:#667eea;margin-bottom:20px;">สมัครสมาชิก</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error" style="margin-bottom:12px;">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>ชื่อผู้ใช้งาน</label>
+            <input type="text" name="username" required minlength="3">
+        </div>
+        <div class="form-group">
+            <label>อีเมล</label>
+            <input type="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label>รหัสผ่าน</label>
+            <input type="password" name="password" required minlength="6">
+        </div>
+        <div class="form-group">
+            <label>ยืนยันรหัสผ่าน</label>
+            <input type="password" name="confirmPassword" required minlength="6">
+        </div>
+        <button type="submit">สมัครสมาชิก</button>
+    </form>
+
+    <div class="switch" style="text-align:center;margin-top:16px;">
+        มีบัญชีแล้วใช่ไหม? <a href="{% url 'login' %}">เข้าสู่ระบบ</a>
+    </div>
+</div>
+{% endblock %}

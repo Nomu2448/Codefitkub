@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - CodeFitKub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 { text-align: center; color: #667eea; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #333; font-weight: 600; }
+        {% extends 'base.html' %}
+
+        {% block title %}ล็อกอิน - CodeFitKub{% endblock %}
+
+        {% block content %}
+        <div style="max-width:420px;margin:30px auto;">
+            <h1 style="text-align:center;color:#667eea;margin-bottom:20px;">ล็อกอิน</h1>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{% if message.tags == 'error' %}error{% else %}success{% endif %}" style="margin-bottom:12px;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้งาน</label>
+                    <input type="text" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button type="submit">ล็อกอิน</button>
+            </form>
+
+            <div class="switch" style="text-align:center;margin-top:16px;">
+                ยังไม่มีบัญชีใช่ไหม? <a href="{% url 'register' %}">สมัครสมาชิก</a>
+            </div>
+        </div>
+        {% endblock %}
