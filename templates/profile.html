@@ -1,0 +1,606 @@
+{% extends "base.html" %}
+
+{% block title %}ระบบบันทึกการออกกำลังกาย - CodeFitKub{% endblock %}
+
+{% block extra_head %}
+<style>
+    .nav-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+    .tab-btn {
+        flex: 1;
+        min-width: 150px;
+        padding: 15px 25px;
+        background: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .tab-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .tab-btn.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .form-group { margin-bottom: 20px; }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1em;
+        transition: border-color 0.3s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: 10px;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+    }
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+    }
+    .btn-danger:hover { background: #c82333; }
+    .btn-success {
+        background: #28a745;
+        color: white;
+    }
+    .btn-success:hover { background: #218838; }
+    .exercise-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .exercise-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 5px solid #667eea;
+        transition: transform 0.3s ease;
+    }
+    .exercise-card:hover { transform: translateX(5px); }
+    .exercise-card h3 {
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    .exercise-card p {
+        margin: 5px 0;
+        color: #555;
+    }
+    .log-item {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border-left: 5px solid #28a745;
+    }
+    .log-item h4 {
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    .log-exercises {
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+    .log-exercises li {
+        margin: 5px 0;
+        color: #555;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .stat-card h3 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+    .stat-card p {
+        font-size: 1.1em;
+        opacity: 0.9;
+    }
+    .exercise-form-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    @media (max-width: 768px) {
+        .nav-tabs { flex-direction: column; }
+        .tab-btn { width: 100%; }
+        .exercise-list { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>💪 ระบบบันทึกการออกกำลังกาย</h1>
+<p class="subtitle">จัดการโปรแกรมและติดตามประวัติการออกกำลังกาย</p>
+
+<div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('exercises')">🏋️ ท่าออกกำลังกาย</button>
+    <button class="tab-btn" onclick="switchTab('programs')">📋 โปรแกรมออกกำลังกาย</button>
+    <button class="tab-btn" onclick="switchTab('log')">✏️ บันทึกการออกกำลัง</button>
+    <button class="tab-btn" onclick="switchTab('history')">📊 ประวัติการออกกำลัง</button>
+</div>
+
+<!-- แท็บท่าออกกำลังกาย -->
+<div id="exercises" class="tab-content active">
+    <div class="card">
+        <h2>➕ เพิ่มท่าออกกำลังกายใหม่</h2>
+        <form id="exerciseForm" onsubmit="addExercise(event)">
+            <div class="exercise-form-container">
+                <div class="form-group">
+                    <label>ชื่อท่าออกกำลังกาย *</label>
+                    <input type="text" id="exerciseName" required>
+                </div>
+                <div class="form-group">
+                    <label>ประเภท *</label>
+                    <select id="exerciseType" required>
+                        <option value="">-- เลือกประเภท --</option>
+                        <option value="แขน">แขน</option>
+                        <option value="ขา">ขา</option>
+                        <option value="อก">อก</option>
+                        <option value="หลัง">หลัง</option>
+                        <option value="ไหล่">ไหล่</option>
+                        <option value="หน้าท้อง">หน้าท้อง</option>
+                        <option value="คาร์ดิโอ">คาร์ดิโอ</option>
+                        <option value="ยืดเหยียด">ยืดเหยียด</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ระดับความยาก *</label>
+                    <select id="exerciseDifficulty" required>
+                        <option value="เริ่มต้น">เริ่มต้น</option>
+                        <option value="ปานกลาง">ปานกลาง</option>
+                        <option value="ยาก">ยาก</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>คำอธิบาย</label>
+                <textarea id="exerciseDescription" placeholder="อธิบายวิธีการทำท่านี้..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">เพิ่มท่าออกกำลังกาย</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>📚 รายการท่าออกกำลังกาย</h2>
+        <div class="form-group">
+            <label>กรองตามประเภท</label>
+            <select id="filterType" onchange="filterExercises()">
+                <option value="">ทั้งหมด</option>
+                <option value="แขน">แขน</option>
+                <option value="ขา">ขา</option>
+                <option value="อก">อก</option>
+                <option value="หลัง">หลัง</option>
+                <option value="ไหล่">ไหล่</option>
+                <option value="หน้าท้อง">หน้าท้อง</option>
+                <option value="คาร์ดิโอ">คาร์ดิโอ</option>
+                <option value="ยืดเหยียด">ยืดเหยียด</option>
+            </select>
+        </div>
+        <div id="exerciseList" class="exercise-list"></div>
+    </div>
+</div>
+
+<!-- แท็บโปรแกรมออกกำลังกาย -->
+<div id="programs" class="tab-content">
+    <div class="card">
+        <h2>➕ สร้างโปรแกรมออกกำลังกาย</h2>
+        <form id="programForm" onsubmit="addProgram(event)">
+            <div class="form-group">
+                <label>ชื่อโปรแกรม *</label>
+                <input type="text" id="programName" required>
+            </div>
+            <div class="form-group">
+                <label>วัตถุประสงค์</label>
+                <select id="programGoal">
+                    <option value="ลดน้ำหนัก">ลดน้ำหนัก</option>
+                    <option value="เพิ่มกล้ามเนื้อ">เพิ่มกล้ามเนื้อ</option>
+                    <option value="เสริมความแข็งแรง">เสริมความแข็งแรง</option>
+                    <option value="เพิ่มความอดทน">เพิ่มความอดทน</option>
+                    <option value="ยืดหยุ่น">เพิ่มความยืดหยุ่น</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>เลือกท่าออกกำลังกาย (กด Ctrl เพื่อเลือกหลายท่า)</label>
+                <select id="programExercises" multiple size="8" style="height: auto;"></select>
+            </div>
+            <div class="form-group">
+                <label>คำอธิบายโปรแกรม</label>
+                <textarea id="programDescription"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">สร้างโปรแกรม</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>📋 โปรแกรมที่มีอยู่</h2>
+        <div id="programList" class="exercise-list"></div>
+    </div>
+</div>
+
+<!-- แท็บบันทึกการออกกำลัง -->
+<div id="log" class="tab-content">
+    <div class="card">
+        <h2>✏️ บันทึกการออกกำลังกายวันนี้</h2>
+        <form id="logForm" onsubmit="addWorkoutLog(event)">
+            <div class="form-group">
+                <label>เลือกสมาชิก *</label>
+                <select id="logMember" required>
+                    <option value="">-- เลือกสมาชิก --</option>
+                </select>
+                <button type="button" class="btn btn-success" style="margin-top: 10px;" onclick="addNewMember()">➕ เพิ่มสมาชิกใหม่</button>
+            </div>
+
+            <div class="form-group">
+                <label>วันที่ออกกำลังกาย *</label>
+                <input type="date" id="logDate" required>
+            </div>
+
+            <div class="form-group">
+                <label>เวลาที่ใช้ (นาที) *</label>
+                <input type="number" id="logDuration" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>เลือกโปรแกรม (ถ้ามี)</label>
+                <select id="logProgram">
+                    <option value="">-- ไม่เลือกโปรแกรม --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>เลือกท่าออกกำลังกายที่ทำ *</label>
+                <div id="logExercisesContainer"></div>
+            </div>
+
+            <div class="form-group">
+                <label>บันทึกเพิ่มเติม</label>
+                <textarea id="logNotes" placeholder="ความรู้สึก, พลังงาน, ปัญหาที่พบ..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">บันทึกการออกกำลัง</button>
+        </form>
+    </div>
+</div>
+
+<!-- แท็บประวัติ -->
+<div id="history" class="tab-content">
+    <div class="card">
+        <h2>📊 เลือกสมาชิกเพื่อดูประวัติ</h2>
+        <div class="form-group">
+            <label>เลือกสมาชิก</label>
+            <select id="historyMember" onchange="showMemberHistory()">
+                <option value="">-- เลือกสมาชิก --</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="statsContainer"></div>
+    <div id="historyContainer"></div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let exercises = [];
+    let programs = [];
+    let workoutLogs = [];
+    let members = ['สมาชิก 1', 'สมาชิก 2', 'สมาชิก 3'];
+
+    window.onload = function() {
+        loadSampleData();
+        updateExerciseList();
+        updateProgramList();
+        updateMemberSelects();
+        updateLogExercises();
+        updateProgramExercisesSelect();
+        document.getElementById('logDate').valueAsDate = new Date();
+    };
+
+    function loadSampleData() {
+        exercises = [
+            {id: 1, name: 'วิดพื้น', type: 'อก', difficulty: 'เริ่มต้น', description: 'วิดพื้นแบบพื้นฐาน เน้นกล้ามเนื้ออก'},
+            {id: 2, name: 'ซิทอัพ', type: 'หน้าท้อง', difficulty: 'เริ่มต้น', description: 'เสริมสร้างกล้ามเนื้อหน้าท้อง'},
+            {id: 3, name: 'สควอต', type: 'ขา', difficulty: 'ปานกลาง', description: 'เสริมสร้างกล้ามเนื้อขาและสะโพก'},
+            {id: 4, name: 'วิ่งเหยาะ', type: 'คาร์ดิโอ', difficulty: 'เริ่มต้น', description: 'วิ่งเหยาะที่จุดเพื่อเพิ่มอัตราการเต้นของหัวใจ'},
+            {id: 5, name: 'ดัมเบลเคิร์ล', type: 'แขน', difficulty: 'ปานกลาง', description: 'ยกกล้ามเนื้อ biceps ด้วยดัมเบล'}
+        ];
+
+        programs = [
+            {id: 1, name: 'โปรแกรมลดน้ำหนัก', goal: 'ลดน้ำหนัก', exercises: [1, 2, 4], description: 'โปรแกรมสำหรับผู้เริ่มต้นที่ต้องการลดน้ำหนัก'},
+            {id: 2, name: 'โปรแกรมเพิ่มกล้ามเนื้อ', goal: 'เพิ่มกล้ามเนื้อ', exercises: [1, 3, 5], description: 'เน้นการสร้างกล้ามเนื้อทั่วร่างกาย'}
+        ];
+
+        workoutLogs = [
+            {id: 1, member: 'สมาชิก 1', date: '2025-10-01', duration: 45, exercises: [{id:1,sets:3,reps:10,weight:0},{id:2,sets:3,reps:15,weight:0},{id:4,sets:1,reps:10,weight:0}], notes: 'รู้สึกดี มีพลัง', programId: 1},
+            {id: 2, member: 'สมาชิก 1', date: '2025-10-03', duration: 50, exercises: [{id:1,sets:3,reps:12,weight:0},{id:3,sets:3,reps:12,weight:20},{id:5,sets:3,reps:10,weight:5}], notes: 'เริ่มปวดกล้ามเนื้อบ้าง', programId: 2}
+        ];
+    }
+
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        event.target.classList.add('active');
+        if(tabName === 'history') showMemberHistory();
+    }
+
+    function addExercise(e) {
+        e.preventDefault();
+        exercises.push({
+            id: Date.now(),
+            name: document.getElementById('exerciseName').value,
+            type: document.getElementById('exerciseType').value,
+            difficulty: document.getElementById('exerciseDifficulty').value,
+            description: document.getElementById('exerciseDescription').value
+        });
+        updateExerciseList();
+        updateLogExercises();
+        updateProgramExercisesSelect();
+        document.getElementById('exerciseForm').reset();
+        alert('เพิ่มท่าออกกำลังกายสำเร็จ! ✅');
+    }
+
+    function updateExerciseList() {
+        const filterType = document.getElementById('filterType')?.value || '';
+        const filtered = filterType ? exercises.filter(ex => ex.type === filterType) : exercises;
+        document.getElementById('exerciseList').innerHTML = filtered.map(ex => `
+            <div class="exercise-card">
+                <h3>🏋️ ${ex.name}</h3>
+                <p><strong>ประเภท:</strong> ${ex.type}</p>
+                <p><strong>ระดับ:</strong> ${ex.difficulty}</p>
+                <p>${ex.description || 'ไม่มีคำอธิบาย'}</p>
+                <button class="btn btn-danger" style="margin-top: 10px;" onclick="deleteExercise(${ex.id})">🗑️ ลบ</button>
+            </div>
+        `).join('') || '<p style="text-align: center; padding: 20px;">ยังไม่มีท่าออกกำลังกาย</p>';
+    }
+
+    function filterExercises() { updateExerciseList(); }
+
+    function deleteExercise(id) {
+        if(confirm('คุณต้องการลบท่านี้หรือไม่?')) {
+            exercises = exercises.filter(ex => ex.id !== id);
+            updateExerciseList();
+            updateLogExercises();
+            updateProgramExercisesSelect();
+        }
+    }
+
+    function addProgram(e) {
+        e.preventDefault();
+        const selected = Array.from(document.getElementById('programExercises').selectedOptions).map(o => parseInt(o.value));
+        if(selected.length === 0) return alert('กรุณาเลือกท่าออกกำลังกายอย่างน้อย 1 ท่า');
+        
+        programs.push({
+            id: Date.now(),
+            name: document.getElementById('programName').value,
+            goal: document.getElementById('programGoal').value,
+            exercises: selected,
+            description: document.getElementById('programDescription').value
+        });
+        updateProgramList();
+        updateLogProgramSelect();
+        document.getElementById('programForm').reset();
+        alert('สร้างโปรแกรมสำเร็จ! ✅');
+    }
+
+    function updateProgramList() {
+        document.getElementById('programList').innerHTML = programs.map(p => `
+            <div class="exercise-card">
+                <h3>📋 ${p.name}</h3>
+                <p><strong>วัตถุประสงค์:</strong> ${p.goal}</p>
+                <p><strong>ท่าออกกำลังกาย:</strong> ${p.exercises.map(id => exercises.find(e => e.id === id)?.name || 'ไม่พบข้อมูล').join(', ')}</p>
+                <p>${p.description || 'ไม่มีคำอธิบาย'}</p>
+                <button class="btn btn-danger" style="margin-top: 10px;" onclick="deleteProgram(${p.id})">🗑️ ลบ</button>
+            </div>
+        `).join('') || '<p style="text-align: center; padding: 20px;">ยังไม่มีโปรแกรม</p>';
+    }
+
+    function deleteProgram(id) {
+        if(confirm('คุณต้องการลบโปรแกรมนี้หรือไม่?')) {
+            programs = programs.filter(p => p.id !== id);
+            updateProgramList();
+            updateLogProgramSelect();
+        }
+    }
+
+    function updateProgramExercisesSelect() {
+        document.getElementById('programExercises').innerHTML = exercises.map(ex => 
+            `<option value="${ex.id}">${ex.name} (${ex.type})</option>`
+        ).join('');
+    }
+
+    function updateMemberSelects() {
+        ['logMember', 'historyMember'].forEach(id => {
+            const sel = document.getElementById(id);
+            const val = sel.value;
+            sel.innerHTML = '<option value="">-- เลือกสมาชิก --</option>' + members.map(m => `<option value="${m}">${m}</option>`).join('');
+            if(val) sel.value = val;
+        });
+    }
+
+    function addNewMember() {
+        const name = prompt('กรุณาใส่ชื่อสมาชิกใหม่:');
+        if(name && name.trim()) {
+            members.push(name.trim());
+            updateMemberSelects();
+            alert('เพิ่มสมาชิกสำเร็จ! ✅');
+        }
+    }
+
+    function updateLogExercises() {
+        document.getElementById('logExercisesContainer').innerHTML = exercises.map(ex => `
+            <div style="margin: 8px 0;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" name="logExercises" value="${ex.id}" style="width: auto; margin-right: 10px;">
+                    ${ex.name} (${ex.type})
+                </label>
+                <div style="margin-left: 30px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 5px;">
+                    <input type="number" placeholder="เซ็ต" min="1" id="sets_${ex.id}" style="padding: 5px;">
+                    <input type="number" placeholder="ครั้ง/เซ็ต" min="1" id="reps_${ex.id}" style="padding: 5px;">
+                    <input type="number" placeholder="น้ำหนัก (kg)" min="0" step="0.5" id="weight_${ex.id}" style="padding: 5px;">
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateLogProgramSelect() {
+        document.getElementById('logProgram').innerHTML = '<option value="">-- ไม่เลือกโปรแกรม --</option>' +
+            programs.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+    }
+
+    function addWorkoutLog(e) {
+        e.preventDefault();
+        const member = document.getElementById('logMember').value;
+        if(!member) return alert('กรุณาเลือกสมาชิก');
+
+        const selected = Array.from(document.querySelectorAll('input[name="logExercises"]:checked')).map(cb => ({
+            id: parseInt(cb.value),
+            sets: document.getElementById(`sets_${cb.value}`)?.value || 0,
+            reps: document.getElementById(`reps_${cb.value}`)?.value || 0,
+            weight: document.getElementById(`weight_${cb.value}`)?.value || 0
+        }));
+
+        if(selected.length === 0) return alert('กรุณาเลือกท่าออกกำลังกายอย่างน้อย 1 ท่า');
+
+        workoutLogs.push({
+            id: Date.now(),
+            member: member,
+            date: document.getElementById('logDate').value,
+            duration: parseInt(document.getElementById('logDuration').value),
+            exercises: selected,
+            programId: document.getElementById('logProgram').value ? parseInt(document.getElementById('logProgram').value) : null,
+            notes: document.getElementById('logNotes').value
+        });
+
+        document.getElementById('logForm').reset();
+        document.getElementById('logDate').valueAsDate = new Date();
+        updateLogExercises();
+        alert('บันทึกการออกกำลังกายสำเร็จ! ✅');
+    }
+
+    function showMemberHistory() {
+        const member = document.getElementById('historyMember').value;
+        if(!member) {
+            document.getElementById('statsContainer').innerHTML = '';
+            document.getElementById('historyContainer').innerHTML = '';
+            return;
+        }
+
+        const logs = workoutLogs.filter(l => l.member === member);
+        if(logs.length === 0) {
+            document.getElementById('statsContainer').innerHTML = '';
+            document.getElementById('historyContainer').innerHTML = '<div class="card"><p style="text-align: center; padding: 20px;">ยังไม่มีประวัติการออกกำลังกาย</p></div>';
+            return;
+        }
+
+        const totalWorkouts = logs.length;
+        const totalMinutes = logs.reduce((s, l) => s + l.duration, 0);
+        const exCount = {};
+        logs.forEach(l => l.exercises.forEach(ex => exCount[ex.id] = (exCount[ex.id] || 0) + 1));
+        const mostPopular = Object.keys(exCount).length > 0 ? exercises.find(e => e.id == Object.keys(exCount).reduce((a, b) => exCount[a] > exCount[b] ? a : b))?.name || '-' : '-';
+
+        document.getElementById('statsContainer').innerHTML = `
+            <div class="stats-grid">
+                <div class="stat-card"><h3>${totalWorkouts}</h3><p>ครั้งทั้งหมด</p></div>
+                <div class="stat-card"><h3>${totalMinutes}</h3><p>นาทีทั้งหมด</p></div>
+                <div class="stat-card"><h3>${Math.round(totalMinutes / totalWorkouts)}</h3><p>นาทีเฉลี่ย/ครั้ง</p></div>
+                <div class="stat-card"><h3 style="font-size: 1.5em;">${mostPopular}</h3><p>ท่าที่ทำบ่อยที่สุด</p></div>
+            </div>
+        `;
+
+        document.getElementById('historyContainer').innerHTML = `
+            <div class="card">
+                <h2>📝 ประวัติการออกกำลังกาย</h2>
+                <div class="workout-log">
+                    ${logs.sort((a, b) => new Date(b.date) - new Date(a.date)).map(log => {
+                        const prog = log.programId ? programs.find(p => p.id === log.programId) : null;
+                        return `
+                            <div class="log-item">
+                                <h4>📅 ${new Date(log.date).toLocaleDateString('th-TH', {year: 'numeric', month: 'long', day: 'numeric'})} - ⏱️ ${log.duration} นาที</h4>
+                                ${prog ? `<p><strong>โปรแกรม:</strong> ${prog.name}</p>` : ''}
+                                <p><strong>ท่าที่ทำ:</strong></p>
+                                <ul class="log-exercises">
+                                    ${log.exercises.map(ex => {
+                                        const exercise = exercises.find(e => e.id === ex.id);
+                                        const details = [];
+                                        if(ex.sets > 0) details.push(`${ex.sets} เซ็ต`);
+                                        if(ex.reps > 0) details.push(`${ex.reps} ครั้ง`);
+                                        if(ex.weight > 0) details.push(`${ex.weight} kg`);
+                                        return `<li>${exercise?.name || 'ไม่ทราบชื่อ'}${details.length > 0 ? ' - ' + details.join(', ') : ''}</li>`;
+                                    }).join('')}
+                                </ul>
+                                ${log.notes ? `<p><strong>บันทึก:</strong> ${log.notes}</p>` : ''}
+                                <button class="btn btn-danger" style="margin-top: 10px;" onclick="deleteLog(${log.id})">🗑️ ลบบันทึก</button>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    function deleteLog(id) {
+        if(confirm('คุณต้องการลบบันทึกนี้หรือไม่?')) {
+            workoutLogs = workoutLogs.filter(l => l.id !== id);
+            showMemberHistory();
+            alert('ลบบันทึกสำเร็จ! ✅');
+        }
+    }
+</script>
+{% endblock %}
