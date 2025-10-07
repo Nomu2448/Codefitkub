@@ -163,6 +163,107 @@
         .tab-btn { width: 100%; }
         .item-grid { grid-template-columns: 1fr; }
     }
+
+/* ✅ Animation เวลาเปลี่ยนแท็บ */
+.tab-content {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.4s ease;
+}
+.tab-content.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ✅ ปรับ UI สำหรับมือถือ */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.4rem;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 0.95rem;
+        color: #666;
+    }
+
+    .nav-tabs {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .tab-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    input, select, textarea {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        font-size: 1rem;
+        margin: 6px 0;
+    }
+
+    .item-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .item-card {
+        padding: 20px;
+        font-size: 0.95rem;
+    }
+
+    .stat-card h3 {
+        font-size: 1.8em;
+    }
+
+    .stat-card p {
+        font-size: 0.9em;
+    }
+
+    .log-item {
+        padding: 15px;
+        font-size: 0.95rem;
+    }
+}
+
+/* ✅ ปุ่มกลับขึ้นบนสุด (เฉพาะมือถือ) */
+#scrollTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+#scrollTopBtn:hover {
+    transform: scale(1.05);
+}
+
 </style>
 {% endblock %}
 
@@ -296,27 +397,8 @@
         exercises = JSON.parse(localStorage.getItem('exercises') || '[]');
         programs = JSON.parse(localStorage.getItem('programs') || '[]');
         workoutLogs = JSON.parse(localStorage.getItem('workoutLogs') || '[]');
-
-        // ถ้าไม่มีข้อมูล ใส่ข้อมูลตัวอย่าง
-        if(exercises.length === 0) {
-            exercises = [
-                {id: 1, name: 'วิดพื้น', type: 'อก', difficulty: 'เริ่มต้น', description: 'วิดพื้นแบบพื้นฐาน เน้นกล้ามเนื้ออก'},
-                {id: 2, name: 'ซิทอัพ', type: 'หน้าท้อง', difficulty: 'เริ่มต้น', description: 'เสริมสร้างกล้ามเนื้อหน้าท้อง'},
-                {id: 3, name: 'สควอต', type: 'ขา', difficulty: 'ปานกลาง', description: 'เสริมสร้างกล้ามเนื้อขาและสะโพก'},
-                {id: 4, name: 'วิ่งเหยาะ', type: 'คาร์ดิโอ', difficulty: 'เริ่มต้น', description: 'วิ่งเหยาะที่จุดเพื่อเพิ่มอัตราการเต้นของหัวใจ'},
-                {id: 5, name: 'ดัมเบลเคิร์ล', type: 'แขน', difficulty: 'ปานกลาง', description: 'ยกกล้ามเนื้อ biceps ด้วยดัมเบล'}
-            ];
-            localStorage.setItem('exercises', JSON.stringify(exercises));
         }
-
-        if(programs.length === 0) {
-            programs = [
-                {id: 1, name: 'โปรแกรมลดน้ำหนัก', goal: 'ลดน้ำหนัก', description: 'โปรแกรมสำหรับผู้เริ่มต้นที่ต้องการลดน้ำหนัก'},
-                {id: 2, name: 'โปรแกรมเพิ่มกล้ามเนื้อ', goal: 'เพิ่มกล้ามเนื้อ', description: 'เน้นการสร้างกล้ามเนื้อทั่วร่างกาย'}
-            ];
-            localStorage.setItem('programs', JSON.stringify(programs));
-        }
-    }
+    
 
     function switchTab(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -473,5 +555,33 @@
             alert('ลบบันทึกสำเร็จ! ✅');
         }
     }
+         // ✅ ปุ่มเลื่อนกลับขึ้นบนสุด
+         const scrollTopBtn = document.createElement('button');
+         scrollTopBtn.id = 'scrollTopBtn';
+         scrollTopBtn.innerHTML = '⬆️';
+         document.body.appendChild(scrollTopBtn);
+
+         window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+        scrollTopBtn.style.display = 'block';
+    } else {
+        scrollTopBtn.style.display = 'none';
+    }
+});
+
+         scrollTopBtn.addEventListener('click', () => {
+         window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+         // ✅ smooth scroll เมื่อเปลี่ยนแท็บบนมือถือ
+    function switchTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+    if(tabName === 'history') showHistory();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+ 
 </script>
 {% endblock %}
