@@ -4,32 +4,231 @@
 
 {% block extra_head %}
 <style>
-    .bmi-form { max-width: 400px; margin: 0 auto; background: #f0f8ff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px #0001; }
-    .bmi-form label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #008080; }
-    .bmi-form input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border-radius: 6px; border: 1px solid #ccc; }
-    .bmi-form button { background: #008080; color: #fff; border: none; padding: 0.7rem 1.5rem; border-radius: 6px; font-size: 1rem; cursor: pointer; }
-    .bmi-form button:hover { background: #005f5f; }
-    .bmi-result { text-align: center; margin-top: 2rem; }
-    .bmi-result h2 { color: #008080; font-size: 2rem; }
-    .bmi-result p { font-size: 1.2rem; }
+    * { box-sizing: border-box; }
+
+    .bmi-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    h1 {
+        color: #008080;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .bmi-form {
+        background: #f0f8ff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #0001;
+    }
+
+    .bmi-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: #008080;
+        font-size: 1rem;
+    }
+
+    .bmi-form input {
+        width: 100%;
+        padding: 0.6rem;
+        margin-bottom: 1.2rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+    }
+
+    .bmi-form button {
+        width: 100%;
+        background: #008080;
+        color: #fff;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .bmi-form button:hover {
+        background: #005f5f;
+    }
+
+    .bmi-result {
+        text-align: center;
+        margin-top: 2rem;
+        padding: 1rem;
+    }
+
+    .bmi-result h2 {
+        color: #008080;
+        font-size: 1.8rem;
+    }
+
+    .bmi-result p {
+        font-size: 1.1rem;
+    }
+
+    /* ตารางแปลผล */
+    .bmi-reference {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px #0001;
+        padding: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .bmi-reference h3 {
+        text-align: center;
+        color: #008080;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+
+    .bmi-reference .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .bmi-reference .row span:first-child {
+        font-weight: bold;
+    }
+
+    .bg-blue-50 { background: #e6f0ff; color: #004080; }
+    .bg-green-50 { background: #e8f8f5; color: #00695c; }
+    .bg-yellow-50 { background: #fff9e6; color: #8a6d00; }
+    .bg-red-50 { background: #ffe6e6; color: #b00020; }
+
+    /* ปรับสำหรับมือถือ */
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 1.6rem;
+        }
+
+        .bmi-form {
+            padding: 1.2rem;
+        }
+
+        .bmi-form input,
+        .bmi-form button {
+            font-size: 1rem;
+            padding: 0.7rem;
+        }
+
+        .bmi-result h2 {
+            font-size: 1.5rem;
+        }
+
+        .bmi-reference h3 {
+            font-size: 1.2rem;
+        }
+
+        .bmi-reference .row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.3rem;
+            font-size: 0.95rem;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<h1 style="color:#008080; text-align:center;">คำนวณ BMI</h1>
-<form method="post" class="bmi-form">
-    {% csrf_token %}
-    <label for="height">ความสูง (cm):</label>
-    <input type="number" name="height" step="0.1" required placeholder="เช่น 170">
-    <label for="weight">น้ำหนัก (kg):</label>
-    <input type="number" name="weight" step="0.1" required placeholder="เช่น 65">
-    <button type="submit">คำนวณ BMI</button>
-</form>
-{% if bmi %}
-    <div class="bmi-result">
-        <h2>ค่าดัชนีมวลกาย (BMI): {{ bmi }}</h2>
-        <p>สถานะน้ำหนัก: <strong>{{ status }}</strong></p>
-        <p style="color:#555; max-width:700px; margin:0.5rem auto">หมายเหตุ: BMI เป็นตัวชี้วัดเบื้องต้น ไม่สามารถทดแทนการวัดองค์ประกอบร่างกายหรือคำปรึกษาจากผู้เชี่ยวชาญได้</p>
+<div class="bmi-container">
+    <h1>คำนวณ BMI</h1>
+
+    <form method="post" class="bmi-form" id="bmiForm">
+        {% csrf_token %}
+        <label for="height">ความสูง (cm):</label>
+        <input type="number" id="height" name="height" step="0.1" required placeholder="เช่น 170">
+
+        <label for="weight">น้ำหนัก (kg):</label>
+        <input type="number" id="weight" name="weight" step="0.1" required placeholder="เช่น 65">
+
+        <button type="submit">คำนวณ BMI</button>
+    </form>
+
+    <div id="bmiResult" class="bmi-result hidden">
+        <h2>ค่าดัชนีมวลกาย (BMI): <span id="bmiValue"></span></h2>
+        <p>สถานะน้ำหนัก: <strong id="bmiStatus"></strong> <span id="bmiIcon"></span></p>
+        <p style="color:#555; max-width:700px; margin:0.5rem auto">
+            หมายเหตุ: BMI เป็นตัวชี้วัดเบื้องต้น ไม่สามารถทดแทนการวัดองค์ประกอบร่างกายหรือคำปรึกษาจากผู้เชี่ยวชาญได้
+        </p>
+        <button onclick="resetCalculator()" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300">คำนวณใหม่</button>
     </div>
-{% endif %}
+
+    <div class="bmi-reference">
+        <h3>เกณฑ์การแปลผล BMI</h3>
+        <div class="row bg-blue-50">
+            <span>น้ำหนักต่ำกว่าเกณฑ์</span><span>< 18.5</span>
+        </div>
+        <div class="row bg-green-50">
+            <span>น้ำหนักปกติ</span><span>18.5 - 24.9</span>
+        </div>
+        <div class="row bg-yellow-50">
+            <span>น้ำหนักเกิน</span><span>25.0 - 29.9</span>
+        </div>
+        <div class="row bg-red-50">
+            <span>อ้วน</span><span>≥ 30.0</span>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('bmiForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const height = parseFloat(document.getElementById('height').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+
+    if (!height || !weight || height <= 0 || weight <= 0) {
+        alert('กรุณากรอกข้อมูลให้ถูกต้อง');
+        return;
+    }
+
+    const heightInMeters = height / 100;
+    const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+
+    let status, statusClass, icon;
+    if (bmi < 18.5) {
+        status = 'น้ำหนักต่ำกว่าเกณฑ์';
+        statusClass = 'bg-blue-100 text-blue-800';
+        icon = '📉';
+    } else if (bmi <= 24.9) {
+        status = 'น้ำหนักปกติ';
+        statusClass = 'bg-green-100 text-green-800';
+        icon = '✅';
+    } else if (bmi <= 29.9) {
+        status = 'น้ำหนักเกิน';
+        statusClass = 'bg-yellow-100 text-yellow-800';
+        icon = '⚠️';
+    } else {
+        status = 'อ้วน';
+        statusClass = 'bg-red-100 text-red-800';
+        icon = '🚨';
+    }
+
+    document.getElementById('bmiValue').textContent = bmi;
+    document.getElementById('bmiStatus').textContent = status;
+    document.getElementById('bmiIcon').textContent = icon;
+    document.getElementById('bmiResult').classList.remove('hidden');
+    document.getElementById('bmiResult').scrollIntoView({ behavior: 'smooth' });
+});
+
+function resetCalculator() {
+    document.getElementById('bmiForm').reset();
+    document.getElementById('bmiResult').classList.add('hidden');
+    document.getElementById('height').focus();
+}
+</script>
 {% endblock %}
