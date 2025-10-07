@@ -1,62 +1,175 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เข้าสู่ระบบ - CodeFitKub</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
         }
+
         .container {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            max-width: 400px;
-            width: 100%;
+            width: 400px;
+            background: #fff;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(0,0,0,.2);
+            padding: 40px 35px;
+            text-align: center;
+            transition: .3s ease;
         }
-        h1 { text-align: center; color: #667eea; margin-bottom: 30px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: #333; font-weight: 600; }
-        {% extends 'base.html' %}
 
-        {% block title %}ล็อกอิน - CodeFitKub{% endblock %}
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px rgba(0,0,0,.25);
+        }
 
-        {% block content %}
-        <div style="max-width:420px;margin:30px auto;">
-            <h1 style="text-align:center;color:#667eea;margin-bottom:20px;">ล็อกอิน</h1>
+        .container h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 25px;
+        }
 
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="{% if message.tags == 'error' %}error{% else %}success{% endif %}" style="margin-bottom:12px;">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+        .input-box {
+            position: relative;
+            margin: 22px 0;
+        }
 
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label>ชื่อผู้ใช้งาน</label>
-                    <input type="text" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label>รหัสผ่าน</label>
-                    <input type="password" name="password" required>
-                </div>
-                <button type="submit">ล็อกอิน</button>
-            </form>
+        .input-box input {
+            width: 100%;
+            padding: 13px 50px 13px 20px;
+            border-radius: 10px;
+            border: none;
+            background: #eee;
+            outline: none;
+            font-size: 15px;
+            color: #333;
+            transition: 0.3s;
+        }
 
-            <div class="switch" style="text-align:center;margin-top:16px;">
-                ยังไม่มีบัญชีใช่ไหม? <a href="{% url 'register' %}">สมัครสมาชิก</a>
+        .input-box input:focus {
+            background: #e6ebff;
+            box-shadow: 0 0 0 2px #7494ec inset;
+        }
+
+        .input-box i {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #555;
+        }
+
+        .forgot-link {
+            margin: 10px 0 18px;
+            text-align: right;
+        }
+
+        .forgot-link a {
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .forgot-link a:hover {
+            color: #7494ec;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #7494ec;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.25s;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: #5f7ae2;
+        }
+
+        p {
+            margin-top: 20px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 100%;
+                margin: 20px;
+                padding: 30px 25px;
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <h1>เข้าสู่ระบบ</h1>
+
+            <div class="input-box">
+                <input type="text" name="username" placeholder="ชื่อผู้ใช้งาน" required>
+                <i class='bx bxs-user'></i>
             </div>
-        </div>
-        {% endblock %}
+
+            <div class="input-box">
+                <input type="password" name="password" placeholder="รหัสผ่าน" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <div class="forgot-link">
+                <a href="#">ลืมรหัสผ่าน?</a>
+            </div>
+
+            <button type="submit" class="btn">เข้าสู่ระบบ</button>
+
+            <p style="margin-top: 18px;">
+                ยังไม่มีบัญชีใช่ไหม?
+                <a href="{% url 'register' %}" style="color:#7494ec; font-weight:600;">สมัครสมาชิก</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        // เพิ่มเอฟเฟกต์ focus นุ่ม ๆ ตอนกรอกข้อมูล
+        document.querySelectorAll('.input-box input').forEach(input => {
+            input.addEventListener('focus', e => {
+                e.target.parentElement.classList.add('focus');
+            });
+            input.addEventListener('blur', e => {
+                if (!e.target.value) {
+                    e.target.parentElement.classList.remove('focus');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
