@@ -74,16 +74,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Codefitkub.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.hwoqotvrvpcwcpwhmueu',
+        'PASSWORD': os.environ.get('SUPABASE_DB_PASSWORD', 'Codefitkub'),
+        'HOST': 'aws-1-ap-southeast-1.pooler.supabase.com',
+        'PORT': '5432',
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # ใช้ os.path.join
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # ใช้ os.path.join
+#     }
+# }
 
 
 # Password validation
