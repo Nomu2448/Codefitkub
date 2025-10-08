@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}ความรู้โภชนาการและการออกกำลังกาย - CodeFitKub{% endblock %}
 
@@ -160,37 +161,18 @@
     }
 
     @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 768px) {
-        .card {
-            padding: 20px;
-        }
-
-        .topic-grid {
-            grid-template-columns: 1fr;
-        }
+        .card { padding: 20px; }
+        .topic-grid { grid-template-columns: 1fr; }
     }
 </style>
 {% endblock %}
@@ -201,72 +183,36 @@
 
 <!-- 🟣 เมนูหัวข้อ -->
 <div class="topic-grid" id="topicMenu">
-    <div class="topic-card" data-target="nutrition"><span class="icon">🥗</span>
-        <h3>โภชนาการพื้นฐาน</h3>
-    </div>
-    <div class="topic-card" data-target="benefit"><span class="icon">💪</span>
-        <h3>ประโยชน์การออกกำลังกาย</h3>
-    </div>
-    <div class="topic-card" data-target="meal"><span class="icon">🍽️</span>
-        <h3>แผนอาหารสำหรับออกกำลังกาย</h3>
-    </div>
-    <div class="topic-card" data-target="caution"><span class="icon">⚠️</span>
-        <h3>ข้อควรระวังและคำแนะนำ</h3>
-    </div>
-    <div class="topic-card" data-target="mental"><span class="icon">🧘</span>
-        <h3>สุขภาพจิตและการพักผ่อน</h3>
-    </div>
-    <div class="topic-card" data-target="goal"><span class="icon">🎯</span>
-        <h3>การตั้งเป้าหมายและติดตาม</h3>
-    </div>
+    <div class="topic-card" data-target="nutrition"><span class="icon">🥗</span><h3>โภชนาการพื้นฐาน</h3></div>
+    <div class="topic-card" data-target="benefit"><span class="icon">💪</span><h3>ประโยชน์การออกกำลังกาย</h3></div>
+    <div class="topic-card" data-target="meal"><span class="icon">🍽️</span><h3>แผนอาหารสำหรับออกกำลังกาย</h3></div>
+    <div class="topic-card" data-target="caution"><span class="icon">⚠️</span><h3>ข้อควรระวังและคำแนะนำ</h3></div>
+    <div class="topic-card" data-target="mental"><span class="icon">🧘</span><h3>สุขภาพจิตและการพักผ่อน</h3></div>
+    <div class="topic-card" data-target="goal"><span class="icon">🎯</span><h3>การตั้งเป้าหมายและติดตาม</h3></div>
 </div>
 
 <!-- 🧩 เนื้อหาแต่ละหัวข้อ -->
 <div id="topicContent">
-    <!-- โภชนาการพื้นฐาน -->
     <div class="content-section" id="nutrition">
         <a href="#" class="back-btn" onclick="goBack(event)">⬅️ กลับ</a>
         <div class="card">
-            <div class="card-header"><span class="icon">🥗</span>
-                <h2>โภชนาการพื้นฐาน</h2>
-            </div>
+            <div class="card-header"><span class="icon">🥗</span><h2>โภชนาการพื้นฐาน</h2></div>
             <p>โภชนาการที่ดีเป็นรากฐานสำคัญของสุขภาพที่แข็งแรง...</p>
             <table class="nutrition-table">
-                <tr>
-                    <th>หมู่อาหาร</th>
-                    <th>ประโยชน์</th>
-                </tr>
-                <tr>
-                    <td>🍚 คาร์โบไฮเดรต</td>
-                    <td>ให้พลังงาน</td>
-                </tr>
-                <tr>
-                    <td>🥩 โปรตีน</td>
-                    <td>สร้างและซ่อมแซมกล้ามเนื้อ</td>
-                </tr>
-                <tr>
-                    <td>🥛 นมและผลิตภัณฑ์</td>
-                    <td>แคลเซียมสำหรับกระดูก</td>
-                </tr>
-                <tr>
-                    <td>🥬 ผักและผลไม้</td>
-                    <td>วิตามินและเกลือแร่</td>
-                </tr>
-                <tr>
-                    <td>🥑 ไขมันดี</td>
-                    <td>พลังงานสำรอง</td>
-                </tr>
+                <tr><th>หมู่อาหาร</th><th>ประโยชน์</th></tr>
+                <tr><td>🍚 คาร์โบไฮเดรต</td><td>ให้พลังงาน</td></tr>
+                <tr><td>🥩 โปรตีน</td><td>สร้างและซ่อมแซมกล้ามเนื้อ</td></tr>
+                <tr><td>🥛 นมและผลิตภัณฑ์</td><td>แคลเซียมสำหรับกระดูก</td></tr>
+                <tr><td>🥬 ผักและผลไม้</td><td>วิตามินและเกลือแร่</td></tr>
+                <tr><td>🥑 ไขมันดี</td><td>พลังงานสำรอง</td></tr>
             </table>
         </div>
     </div>
 
-    <!-- ประโยชน์การออกกำลังกาย -->
     <div class="content-section" id="benefit">
         <a href="#" class="back-btn" onclick="goBack(event)">⬅️ กลับ</a>
         <div class="card">
-            <div class="card-header"><span class="icon">💪</span>
-                <h2>ประโยชน์ของการออกกำลังกาย</h2>
-            </div>
+            <div class="card-header"><span class="icon">💪</span><h2>ประโยชน์ของการออกกำลังกาย</h2></div>
             <ul class="benefit-list">
                 <li>เพิ่มความแข็งแรงของกล้ามเนื้อและกระดูก</li>
                 <li>ลดความเสี่ยงโรคหัวใจและเบาหวาน</li>
@@ -277,31 +223,19 @@
         </div>
     </div>
 
-    <!-- แผนอาหาร -->
     <div class="content-section" id="meal">
         <a href="#" class="back-btn" onclick="goBack(event)">⬅️ กลับ</a>
         <div class="card">
-            <div class="card-header"><span class="icon">🍽️</span>
-                <h2>แผนอาหารก่อน–หลังออกกำลังกาย</h2>
-            </div>
-            <div class="info-box">
-                <strong>ก่อนออกกำลังกาย:</strong>
-                <p>คาร์บเชิงซ้อน เช่น ข้าวกล้อง + โปรตีนเบา เช่น ไข่, ปลา</p>
-            </div>
-            <div class="info-box">
-                <strong>หลังออกกำลังกาย:</strong>
-                <p>โปรตีนคุณภาพสูง เช่น เนื้อไก่, นม และคาร์บ เช่น กล้วย</p>
-            </div>
+            <div class="card-header"><span class="icon">🍽️</span><h2>แผนอาหารก่อน–หลังออกกำลังกาย</h2></div>
+            <div class="info-box"><strong>ก่อนออกกำลังกาย:</strong><p>คาร์บเชิงซ้อน เช่น ข้าวกล้อง + โปรตีนเบา เช่น ไข่, ปลา</p></div>
+            <div class="info-box"><strong>หลังออกกำลังกาย:</strong><p>โปรตีนคุณภาพสูง เช่น เนื้อไก่, นม และคาร์บ เช่น กล้วย</p></div>
         </div>
     </div>
 
-    <!-- ข้อควรระวัง -->
     <div class="content-section" id="caution">
         <a href="#" class="back-btn" onclick="goBack(event)">⬅️ กลับ</a>
         <div class="card">
-            <div class="card-header"><span class="icon">⚠️</span>
-                <h2>ข้อควรระวังและคำแนะนำ</h2>
-            </div>
+            <div class="card-header"><span class="icon">⚠️</span><h2>ข้อควรระวังและคำแนะนำ</h2></div>
             <ul class="benefit-list">
                 <li>อบอุ่นร่างกายก่อนทุกครั้ง</li>
                 <li>หยุดเมื่อมีอาการเจ็บ</li>
@@ -310,53 +244,45 @@
         </div>
     </div>
 
-    <!-- สุขภาพจิต -->
     <div class="content-section" id="mental">
         <a href="#" class="back-btn" onclick="goBack(event)">⬅️ กลับ</a>
         <div class="card">
-            <div class="card-header"><span class="icon">🧘</span>
-                <h2>สุขภาพจิตและการพักผ่อน</h2>
-            </div>
+            <div class="card-header"><span class="icon">🧘</span><h2>สุขภาพจิตและการพักผ่อน</h2></div>
             <ul class="benefit-list">
-                <li>นอนหลับให้เพียงพอ 7-9 ชม.</li>
+                <li>นอนหลับให้เพียงพอ 7–9 ชม.</li>
                 <li>ฝึกสมาธิหรือโยคะ</li>
                 <li>ใช้เวลากับครอบครัวและเพื่อน</li>
             </ul>
         </div>
     </div>
 
-    <!-- การตั้งเป้าหมาย -->
     <div class="content-section" id="goal">
         <a href="#" class="back-btn" onclick="goBack(event)">⬅️ กลับ</a>
         <div class="card">
-            <div class="card-header"><span class="icon">🎯</span>
-                <h2>การตั้งเป้าหมายและติดตามผล</h2>
-            </div>
-            <div class="info-box">
-                <p>ตั้งเป้าหมายให้ชัด เช่น เพิ่มกล้าม 2 กก. ใน 2 เดือน</p>
-            </div>
-            <div class="info-box">
-                <p>จดบันทึกความคืบหน้าทุกสัปดาห์</p>
-            </div>
+            <div class="card-header"><span class="icon">🎯</span><h2>การตั้งเป้าหมายและติดตามผล</h2></div>
+            <div class="info-box"><p>ตั้งเป้าหมายให้ชัด เช่น เพิ่มกล้าม 2 กก. ใน 2 เดือน</p></div>
+            <div class="info-box"><p>จดบันทึกความคืบหน้าทุกสัปดาห์</p></div>
         </div>
     </div>
 </div>
 
+{% verbatim %}
 <script>
-    function goBack(e) {
-        e.preventDefault();
-        document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
-        document.getElementById("topicMenu").style.display = "grid";
-    }
+function goBack(e) {
+    e.preventDefault();
+    document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+    document.getElementById("topicMenu").style.display = "grid";
+}
 
-    document.querySelectorAll(".topic-card").forEach(card => {
-        card.addEventListener("click", () => {
-            const target = card.dataset.target;
-            document.getElementById("topicMenu").style.display = "none";
-            document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
-            document.getElementById(target).classList.add("active");
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+document.querySelectorAll(".topic-card").forEach(card => {
+    card.addEventListener("click", () => {
+        const target = card.dataset.target;
+        document.getElementById("topicMenu").style.display = "none";
+        document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+        document.getElementById(target).classList.add("active");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+});
 </script>
+{% endverbatim %}
 {% endblock %}
