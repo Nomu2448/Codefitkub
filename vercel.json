@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "Codefitkub/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "runtime": "python3.9"
+            }
+        },
+        {
+            "src": "build_files.sh",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "staticfiles_build",
+                "runtime": "python3.9"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/staticfiles_build/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "Codefitkub/wsgi.py"
+        }
+    ]
+}
