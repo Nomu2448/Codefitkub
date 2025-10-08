@@ -34,19 +34,12 @@
             z-index: 20;
         }
 
-        .brand a {
-            display: flex;
-            align-items: center;
+        .nav-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
             text-decoration: none;
-        }
-
-        .brand img {
-            height: 55px;
-            transition: transform 0.3s ease;
-        }
-
-        .brand img:hover {
-            transform: scale(1.05);
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
@@ -182,10 +175,6 @@
                 border-radius: 14px;
             }
 
-            .brand img {
-                height: 50px;
-            }
-
             .menu-toggle {
                 display: flex;
                 position: absolute;
@@ -250,11 +239,7 @@
 </head>
 <body>
     <nav>
-        <div class="brand">
-            <a href="{% url 'home' %}">
-                <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
-            </a>
-        </div>
+        <a href="{% url 'home' %}" class="nav-title">CodeFitKub</a>
 
         <div class="menu-toggle">
             <span></span><span></span><span></span>
