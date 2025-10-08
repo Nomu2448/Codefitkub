@@ -1,6 +1,6 @@
 <!-- 🌤 แบนเนอร์แนวสุขภาพ -->
 <p align="center">
-  <img src="<img width="1755" height="1008" alt="pw-web" src="https://github.com/user-attachments/assets/f2cefa13-b504-4f32-b264-ba43d26a01f6" />
+  <img width="2000" height="741" alt="otop_preview2" src="https://github.com/user-attachments/assets/22bad303-b3c6-4822-a627-9126a8930686" />  
 " 
        alt="CodeFitKub Banner" 
        style="border-radius:15px; width:100%; max-height:350px; object-fit:cover;">
@@ -24,12 +24,11 @@
 ## 👩‍💻 ทีมผู้พัฒนา
 
 | ชื่อ | รหัสนักศึกษา |
-|------|
-| 👦 นายนนทพัทธ์ นะทีศรี 
-| 👦 นายวทัญญู ช่างเกวียน 
-| 👩 นางสาวจีรนันท์ เกิดกล้า 
-| 👦 นายนิลรักษ์ บุตรโพธิ์ศรี 
-
+|------|----------------|
+| 👦 นายนนทพัทธ์ นะทีศรี | 6712732108 |
+| 👦 นายวทัญญู ช่างเกวียน | 6712732117 |
+| 👩 นางสาวจีรนันท์ เกิดกล้า | 6712732121 |
+| 👦 นายนิลรักษ์ บุตรโพธิ์ศรี | 6712732130 |
 ---
 
 ## 📖 เกี่ยวกับโปรเจกต์
