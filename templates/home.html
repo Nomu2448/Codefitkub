@@ -87,12 +87,13 @@
 <script>
     const workouts = {
         chest: { 
-           title: "🫀 ออกกำลังกายส่วนหน้าอก", 
+            title: "🫀 ออกกำลังกายส่วนหน้าอก", 
             exercises: [ 
-                { emoji: "👇🏻", name: "Push-ups (วิดพื้น)", details: "ทำ 3 เซต เซตละ 10-15 ครั้ง<br>เน้นกล้ามเนื้อหน้าอกและแขน", video: "https://www.youtube.com/embed/WDIpL0pjun0" },  
+                { emoji: "👇🏻", name: "Push-ups (วิดพื้น)", details: "ทำ 3 เซต เซตละ 10-15 ครั้ง<br>เน้นกล้ามเนื้อหน้าอกและแขน", video: "https://www.youtube.com/embed/WDIpL0pjun0" }, 
                 { emoji: "🏋️", name: "Bench Press (ยกน้ำหนักบนม้านอน)", details: "ทำ 4 เซต เซตละ 8-12 ครั้ง<br>เหมาะสำหรับสร้างกล้ามเนื้อหน้าอก", video: "https://www.youtube.com/embed/0cXAp6WhSj4" }, 
-                { emoji: "🤸", name: "Chest Fly (กางแขน)", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง<br>ช่วยยืดและกระชับกล้ามเนื้อ", video: "https://www.youtube.com/embed/eozdVDA78K0" }, 
-                { emoji: "⬆️", name: "Incline Press (ยกน้ำหนักบนม้าเอียง)", details: "ทำ 3 เซต เซตละ 10-12 ครั้ง<br>เน้นส่วนบนของหน้าอก", video: "https://www.youtube.com/embed/DbFgADa2PL8"
+                { emoji: "🤸", name: "Chest Fly (กางแขน)", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง<br>ช่วยยืดและกระชับกล้ามเนื้อ", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_3" }, 
+                { emoji: "⬆️", name: "Incline Press (ยกน้ำหนักบนม้าเอียง)", details: "ทำ 3 เซต เซตละ 10-12 ครั้ง<br>เน้นส่วนบนของหน้าอก", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_4" } 
+            ] 
         },
         back: { 
             title: "🫱🏻‍🫲🏼 ออกกำลังกายส่วนหลัง", 
@@ -115,26 +116,29 @@
         legs: { 
             title: "🦵🏻 ออกกำลังกายส่วนขา", 
             exercises: [ 
-                { emoji: "🏋️", name: "Squats (สควอต)", details: "ทำ 4 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/3p8EBPVZ2Iw" }, 
-                { emoji: "🦵", name: "Lunges (ลันจ์)", details: "ทำ 3 เซต เซตละ 10-12 ครั้ง/ข้าง", video: "https://www.youtube.com/embed/QOVaHwm-Q6U" }, 
-                { emoji: "🏋️", name: "Leg Press", details: "ทำ 4 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/IZxyjW7MPJQ" }, 
-                { emoji: "🦿", name: "Calf Raises", details: "ทำ 3 เซต เซตละ 15-20 ครั้ง", video: "https://www.youtube.com/embed/gwLzBJYoWlI"
+                { emoji: "🏋️", name: "Squats (สควอต)", details: "ทำ 4 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_13" }, 
+                { emoji: "🦵", name: "Lunges (ลันจ์)", details: "ทำ 3 เซต เซตละ 10-12 ครั้ง/ข้าง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_14" }, 
+                { emoji: "🏋️", name: "Leg Press", details: "ทำ 4 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_15" }, 
+                { emoji: "🦿", name: "Calf Raises", details: "ทำ 3 เซต เซตละ 15-20 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_16" } 
+            ] 
         },
         abs: { 
-           title: "🧍🏻‍♀️ ออกกำลังกายหน้าท้อง", 
+            title: "🧍🏻‍♀️ ออกกำลังกายหน้าท้อง", 
             exercises: [ 
-                { emoji: "🔥", name: "Crunches", details: "ทำ 3 เซต เซตละ 15-20 ครั้ง", video: "https://www.youtube.com/embed/Xyd_fa5zoEU" }, 
-                { emoji: "🏋️", name: "Plank", details: "ทำ 3 เซต 30-60 วินาที", video: "https://www.youtube.com/embed/pSHjTRCQxIw" }, 
-                { emoji: "🚴", name: "Bicycle Crunches", details: "ทำ 3 เซต เซตละ 15-20 ครั้ง/ข้าง", video: "https://www.youtube.com/embed/1we3bh9uhqY" }, 
-                { emoji: "🦵", name: "Leg Raises", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/l4kQd9eWclE"
+                { emoji: "🔥", name: "Crunches", details: "ทำ 3 เซต เซตละ 15-20 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_17" }, 
+                { emoji: "🏋️", name: "Plank", details: "ทำ 3 เซต 30-60 วินาที", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_18" }, 
+                { emoji: "🚴", name: "Bicycle Crunches", details: "ทำ 3 เซต เซตละ 15-20 ครั้ง/ข้าง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_19" }, 
+                { emoji: "🦵", name: "Leg Raises", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_20" } 
+            ] 
         },
         shoulders: { 
             title: "🏋🏼‍♀️ ออกกำลังกายไหล่", 
             exercises: [ 
-                { emoji: "🏋️", name: "Shoulder Press", details: "ทำ 4 เซต เซตละ 10-12 ครั้ง", video: "https://www.youtube.com/embed/qEwKCR5JCog" }, 
-                { emoji: "🦅", name: "Lateral Raises", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/3VcKaXpzqRo" }, 
-                { emoji: "💪", name: "Front Raises", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/-t7fuZ0KhDA" }, 
-                { emoji: "🔄", name: "Rear Delt Fly", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/pSHjTRCQxIw"
+                { emoji: "🏋️", name: "Shoulder Press", details: "ทำ 4 เซต เซตละ 10-12 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_21" }, 
+                { emoji: "🦅", name: "Lateral Raises", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_22" }, 
+                { emoji: "💪", name: "Front Raises", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_23" }, 
+                { emoji: "🔄", name: "Rear Delt Fly", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/pSHjTRCQxIw" } 
+            ] 
         }
     };
 
