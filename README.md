@@ -1,6 +1,7 @@
 <!-- 🌤 แบนเนอร์แนวสุขภาพ -->
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1600&q=80" 
+  <img src="<img width="1755" height="1008" alt="pw-web" src="https://github.com/user-attachments/assets/f2cefa13-b504-4f32-b264-ba43d26a01f6" />
+" 
        alt="CodeFitKub Banner" 
        style="border-radius:15px; width:100%; max-height:350px; object-fit:cover;">
 </p>
@@ -24,10 +25,10 @@
 
 | ชื่อ | รหัสนักศึกษา |
 |------|----------------|
-| 👦 นายนนทพัทธ์ นะทีศรี | 6712732108 |
-| 👦 นายวทัญญู ช่างเกวียน | 6712732117 |
-| 👩 นางสาวจีรนันท์ เกิดกล้า | 6712732121 |
-| 👦 นายนิลรักษ์ บุตรโพธิ์ศรี | 6712732130 |
+| 👦 นายนนทพัทธ์ นะทีศรี | 
+| 👦 นายวทัญญู ช่างเกวียน | 
+| 👩 นางสาวจีรนันท์ เกิดกล้า | 
+| 👦 นายนิลรักษ์ บุตรโพธิ์ศรี |
 
 ---
 
