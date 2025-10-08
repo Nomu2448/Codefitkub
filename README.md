@@ -1,8 +1,7 @@
 <!-- 🌤 แบนเนอร์แนวสุขภาพ -->
 <p align="center">
-  <img width="2000" height="741" alt="otop_preview2" src="https://github.com/user-attachments/assets/22bad303-b3c6-4822-a627-9126a8930686" />  
-" 
----
+<img width="1755" height="1008" alt="pw-web" src="https://github.com/user-attachments/assets/d05231f5-3b8f-4c2d-a35c-1779915002af" />
+
 
 # 🩵 CodeFitKub
 
