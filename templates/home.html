@@ -23,6 +23,45 @@
     .exercise-video { width:100%; aspect-ratio:16/9; border-radius:8px; margin-top:12px; background:#000 }
     .video-placeholder { width:100%; aspect-ratio:16/9; border-radius:8px; margin-top:12px; background:#e0e0e0; display:flex; align-items:center; justify-content:center; color:#666; font-size:0.9rem }
     .empty-state{ text-align:center; padding:60px 20px; color:#666 }
+
+    /* 🔹 ฟังก์ชันสำหรับมือถือ */
+    @media (max-width: 768px) {
+    .body-parts { 
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+        gap: 15px;
+    }
+    .body-part-card { 
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+    .body-part-icon { 
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+    }
+    .body-part-name { 
+        font-size: 1rem;
+    }
+    .workout-section { 
+        padding: 20px;
+    }
+    .workout-title { 
+        font-size: 1.5rem;
+    }
+    .exercises { 
+        grid-template-columns: 1fr;
+    }
+    iframe.exercise-video {
+        max-height: 200px;
+    }
+}
+
+    /* 🔹 ป้องกัน hover effect ทำงานซ้ำซ้อนในมือถือ */
+    @media (hover: none) {
+    .body-part-card:hover {
+        transform: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+}
 </style>
 {% endblock %}
 
@@ -31,12 +70,12 @@
     <p class="subtitle">คลิกเลือกส่วนของร่างกายเพื่อดูท่าออกกำลังกายที่แนะนำ</p>
 
     <div class="body-parts">
-        <div class="body-part-card" data-part="chest"><div class="body-part-icon">💪</div><div class="body-part-name">หน้าอก</div></div>
-        <div class="body-part-card" data-part="back"><div class="body-part-icon">🦾</div><div class="body-part-name">หลัง</div></div>
-        <div class="body-part-card" data-part="arms"><div class="body-part-icon">💪</div><div class="body-part-name">แขน</div></div>
-        <div class="body-part-card" data-part="legs"><div class="body-part-icon">🦵</div><div class="body-part-name">ขา</div></div>
-        <div class="body-part-card" data-part="abs"><div class="body-part-icon">🔥</div><div class="body-part-name">หน้าท้อง</div></div>
-        <div class="body-part-card" data-part="shoulders"><div class="body-part-icon">🏋️</div><div class="body-part-name">ไหล่</div></div>
+        <div class="body-part-card" data-part="chest"><div class="body-part-icon">🫀</div><div class="body-part-name">หน้าอก</div></div>
+        <div class="body-part-card" data-part="back"><div class="body-part-icon">🫱🏻‍🫲🏼</div><div class="body-part-name">หลัง</div></div>
+        <div class="body-part-card" data-part="arms"><div class="body-part-icon">💪🏻</div><div class="body-part-name">แขน</div></div>
+        <div class="body-part-card" data-part="legs"><div class="body-part-icon">🦵🏻</div><div class="body-part-name">ขา</div></div>
+        <div class="body-part-card" data-part="abs"><div class="body-part-icon">🧍🏻‍♀️</div><div class="body-part-name">หน้าท้อง</div></div>
+        <div class="body-part-card" data-part="shoulders"><div class="body-part-icon">🏋🏼‍♀️</div><div class="body-part-name">ไหล่</div></div>
     </div>
 
     <div class="workout-section" id="workout-display">
@@ -48,16 +87,16 @@
 <script>
     const workouts = {
         chest: { 
-            title: "💪 ออกกำลังกายส่วนหน้าอก", 
+            title: "🫀 ออกกำลังกายส่วนหน้าอก", 
             exercises: [ 
-                { emoji: "🏋️", name: "Push-ups (วิดพื้น)", details: "ทำ 3 เซต เซตละ 10-15 ครั้ง<br>เน้นกล้ามเนื้อหน้าอกและแขน", video: "https://www.youtube.com/embed/WDIpL0pjun0" }, 
-                { emoji: "💪", name: "Bench Press (ยกน้ำหนักบนม้านอน)", details: "ทำ 4 เซต เซตละ 8-12 ครั้ง<br>เหมาะสำหรับสร้างกล้ามเนื้อหน้าอก", video: "https://www.youtube.com/embed/0cXAp6WhSj4" }, 
+                { emoji: "👇🏻", name: "Push-ups (วิดพื้น)", details: "ทำ 3 เซต เซตละ 10-15 ครั้ง<br>เน้นกล้ามเนื้อหน้าอกและแขน", video: "https://www.youtube.com/embed/WDIpL0pjun0" }, 
+                { emoji: "🏋️", name: "Bench Press (ยกน้ำหนักบนม้านอน)", details: "ทำ 4 เซต เซตละ 8-12 ครั้ง<br>เหมาะสำหรับสร้างกล้ามเนื้อหน้าอก", video: "https://www.youtube.com/embed/0cXAp6WhSj4" }, 
                 { emoji: "🤸", name: "Chest Fly (กางแขน)", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง<br>ช่วยยืดและกระชับกล้ามเนื้อ", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_3" }, 
                 { emoji: "⬆️", name: "Incline Press (ยกน้ำหนักบนม้าเอียง)", details: "ทำ 3 เซต เซตละ 10-12 ครั้ง<br>เน้นส่วนบนของหน้าอก", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_4" } 
             ] 
         },
         back: { 
-            title: "🦾 ออกกำลังกายส่วนหลัง", 
+            title: "🫱🏻‍🫲🏼 ออกกำลังกายส่วนหลัง", 
             exercises: [ 
                 { emoji: "🏋️", name: "Pull-ups (ดึงตัวขึ้น)", details: "ทำ 3 เซต เซตละ 5-10 ครั้ง<br>สร้างกล้ามเนื้อหลังและแขนได้ดีมาก", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_5" }, 
                 { emoji: "🚣", name: "Barbell Row (ดึงบาร์เบลล์)", details: "ทำ 4 เซต เซตละ 8-12 ครั้ง<br>เน้นกล้ามเนื้อหลังตอนกลาง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_6" }, 
@@ -66,7 +105,7 @@
             ] 
         },
         arms: { 
-            title: "💪 ออกกำลังกายส่วนแขน", 
+            title: "💪🏻 ออกกำลังกายส่วนแขน", 
             exercises: [ 
                 { emoji: "🏋️", name: "Bicep Curl (งอแขน)", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_9" }, 
                 { emoji: "💪", name: "Tricep Dips (ดิป)", details: "ทำ 3 เซต เซตละ 10-12 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_10" }, 
@@ -75,7 +114,7 @@
             ] 
         },
         legs: { 
-            title: "🦵 ออกกำลังกายส่วนขา", 
+            title: "🦵🏻 ออกกำลังกายส่วนขา", 
             exercises: [ 
                 { emoji: "🏋️", name: "Squats (สควอต)", details: "ทำ 4 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_13" }, 
                 { emoji: "🦵", name: "Lunges (ลันจ์)", details: "ทำ 3 เซต เซตละ 10-12 ครั้ง/ข้าง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_14" }, 
@@ -84,7 +123,7 @@
             ] 
         },
         abs: { 
-            title: "🔥 ออกกำลังกายหน้าท้อง", 
+            title: "🧍🏻‍♀️ ออกกำลังกายหน้าท้อง", 
             exercises: [ 
                 { emoji: "🔥", name: "Crunches", details: "ทำ 3 เซต เซตละ 15-20 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_17" }, 
                 { emoji: "🏋️", name: "Plank", details: "ทำ 3 เซต 30-60 วินาที", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_18" }, 
@@ -93,7 +132,7 @@
             ] 
         },
         shoulders: { 
-            title: "🏋️ ออกกำลังกายไหล่", 
+            title: "🏋🏼‍♀️ ออกกำลังกายไหล่", 
             exercises: [ 
                 { emoji: "🏋️", name: "Shoulder Press", details: "ทำ 4 เซต เซตละ 10-12 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_21" }, 
                 { emoji: "🦅", name: "Lateral Raises", details: "ทำ 3 เซต เซตละ 12-15 ครั้ง", video: "https://www.youtube.com/embed/YOUR_VIDEO_ID_22" }, 
@@ -104,29 +143,35 @@
     };
 
     const cards = document.querySelectorAll('.body-part-card');
-    const workoutDisplay = document.getElementById('workout-display');
-    
-    cards.forEach(card => { 
-        card.addEventListener('click', function(){ 
-            const part=this.dataset.part; 
-            cards.forEach(c=>c.classList.remove('active')); 
-            this.classList.add('active'); 
-            displayWorkout(part); 
-        }); 
-    });
-    
-    function displayWorkout(part){ 
-        const workout=workouts[part]; 
-        let exercisesHTML = workout.exercises.map(ex=> `
-            <div class="exercise-card">
-                <div class="exercise-emoji">${ex.emoji}</div>
-                <div class="exercise-name">${ex.name}</div>
-                <div class="exercise-details">${ex.details}</div>
-                ${ex.video ? `<iframe class="exercise-video" src="${ex.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : '<div class="video-placeholder">📹 ใส่ลิงก์วิดีโอที่นี่</div>'}
-            </div>
-        `).join(''); 
-        workoutDisplay.innerHTML = `<div class="workout-title">${workout.title}</div><div class="exercises">${exercisesHTML}</div>`; 
-        workoutDisplay.classList.add('active'); 
-    }
+const workoutDisplay = document.getElementById('workout-display');
+
+cards.forEach(card => { 
+    card.addEventListener('click', function(){ 
+        const part=this.dataset.part; 
+        cards.forEach(c=>c.classList.remove('active')); 
+        this.classList.add('active'); 
+        displayWorkout(part); 
+        // 🔹 เลื่อนจอลงอัตโนมัติสำหรับมือถือ
+        if (window.innerWidth < 768) {
+            setTimeout(() => {
+                workoutDisplay.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
+        }
+    }); 
+});
+
+function displayWorkout(part){ 
+    const workout=workouts[part]; 
+    let exercisesHTML = workout.exercises.map(ex=> `
+        <div class="exercise-card">
+            <div class="exercise-emoji">${ex.emoji}</div>
+            <div class="exercise-name">${ex.name}</div>
+            <div class="exercise-details">${ex.details}</div>
+            ${ex.video ? `<iframe class="exercise-video" src="${ex.video}" frameborder="0" allowfullscreen></iframe>` : '<div class="video-placeholder">📹 ใส่ลิงก์วิดีโอที่นี่</div>'}
+        </div>
+    `).join(''); 
+    workoutDisplay.innerHTML = `<div class="workout-title">${workout.title}</div><div class="exercises">${exercisesHTML}</div>`; 
+    workoutDisplay.classList.add('active'); 
+}
 </script>
 {% endblock %}

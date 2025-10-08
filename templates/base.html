@@ -1,148 +1,303 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block title %}CodeFitKub{% endblock %}</title>
-	<style>
-		* { margin: 0; padding: 0; box-sizing: border-box; }
-		body {
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			min-height: 100vh;
-			padding: 20px;
-			color: #222;
-		}
-		nav { 
-			background: rgba(255,255,255,0.06); 
-			padding: 1rem; 
-			border-radius: 12px; 
-			margin-bottom: 20px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			flex-wrap: wrap;
-		}
-		.nav-links {
-			display: flex;
-			gap: 1rem;
-			flex-wrap: wrap;
-		}
-		nav a { 
-			color: #fff; 
-			text-decoration: none; 
-			font-weight: 600;
-			padding: 8px 15px;
-			border-radius: 6px;
-			transition: background 0.3s ease;
-		}
-		nav a:hover { 
-			background: rgba(255,255,255,0.1);
-		}
-		.user-info {
-			color: #fff;
-			display: flex;
-			align-items: center;
-			gap: 15px;
-		}
-		.username {
-			font-weight: 600;
-			background: rgba(255,255,255,0.15);
-			padding: 8px 15px;
-			border-radius: 6px;
-		}
-		.logout-btn {
-			background: rgba(255,59,48,0.8);
-			color: white;
-			padding: 8px 15px;
-			border-radius: 6px;
-			text-decoration: none;
-			font-weight: 600;
-			transition: background 0.3s ease;
-		}
-		.logout-btn:hover {
-			background: rgba(255,59,48,1);
-		}
-		.container {
-			max-width: 1200px;
-			margin: 0 auto;
-			background: white;
-			border-radius: 15px;
-			padding: 30px;
-			box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-		}
-		h1 { text-align: center; color: #333; margin-bottom: 10px; }
-		.subtitle { text-align:center; color:#555; margin-bottom:20px }
-		footer { text-align: center; color: #eee; margin-top: 24px; }
-		/* small utility */
-		.muted { color:#666 }
-		
-		@media (max-width: 768px) {
-			nav {
-				flex-direction: column;
-				gap: 15px;
-			}
-			.nav-links {
-				width: 100%;
-				justify-content: center;
-			}
-			.user-info {
-				width: 100%;
-				justify-content: center;
-			}
-		}
-		.auth-layout > * { 
-			background: white; 
-			border-radius: 12px; 
-			padding: 40px; 
-			width: 100%;
-			box-shadow: 0 10px 30px rgba(0,0,0,0.14);
-		}
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CodeFitKub{% endblock %}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-		/* Auth form inner styles */
-		.auth-layout form { width: 100%; max-width: 520px; margin: 0 auto; }
-		.auth-layout h1 { text-align: center; color: #5d6fd6; margin-bottom: 18px; }
-		.auth-layout .form-group { margin-bottom: 18px; display: flex; flex-direction: column; align-items: stretch; }
-		.auth-layout label { margin-bottom: 6px; color: #222; font-weight: 600; }
-		.auth-layout input[type="text"],
-		.auth-layout input[type="email"],
-		.auth-layout input[type="password"] {
-			padding: 10px 12px; border: 2px solid #e6e6e6; border-radius: 8px; font-size: 1rem; width: 100%;
-		}
-		.auth-layout button { display: block; width: 100%; padding: 12px; border: none; border-radius: 8px; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); color: #fff; font-weight: 700; cursor: pointer; }
-		.auth-layout .switch { text-align: center; margin-top: 14px; }
-		.auth-layout .error, .auth-layout .success { padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; }
-		.auth-layout .error { background: #fff0f0; border-left: 4px solid #e74c3c; color: #a11; }
-		.auth-layout .success { background: #f0fff4; border-left: 4px solid #27ae60; color: #145; }
-	</style>
-	{% block extra_head %}{% endblock %}
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0e2982ff 0%, #43525eff 100%);
+            min-height: 100vh;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            padding: 0 15px;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        nav {
+            background: rgba(8, 10, 13, 0.08);
+            backdrop-filter: blur(14px);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            box-shadow: 0 4px 25px rgba(59, 59, 59, 0.2);
+            position: sticky;
+            top: 10px;
+            z-index: 20;
+        }
+
+        .brand a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .brand img {
+            height: 55px;
+            transition: transform 0.3s ease;
+        }
+
+        .brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+
+        .primary {
+            background: #082069ff;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .primary:hover {
+            background: #2D4AE6;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .username {
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        .logout-btn {
+            background: #b01c02ff;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ff615b;
+        }
+
+        /* ---------- HAMBURGER ---------- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+        }
+
+        /* ---------- MAIN CONTAINER ---------- */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 50px auto;
+            background: rgba(255,255,255,0.96);
+            border-radius: 20px;
+            padding: 40px 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            animation: fadeIn 0.6s ease;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2D4AE6;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            color: #f9f9f9;
+            margin-top: auto;
+            font-size: 0.9rem;
+            padding: 20px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- RESPONSIVE MOBILE ---------- */
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                padding: 1rem;
+                border-radius: 14px;
+            }
+
+            .brand img {
+                height: 50px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                right: 20px;
+                top: 24px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(14px);
+                border-radius: 0 0 14px 14px;
+                padding: 1rem 1.5rem;
+                margin-top: 10px;
+                gap: 14px;
+                animation: slideDown 0.3s ease;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a,
+            .primary,
+            .logout-btn {
+                width: 100%;
+                text-align: left;
+                padding: 12px 16px;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+            .user-info {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .container {
+                padding: 25px 18px;
+                margin: 30px auto;
+                border-radius: 16px;
+            }
+
+            footer {
+                font-size: 0.85rem;
+                padding: 25px 10px;
+            }
+
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
-	<nav>
-		<div class="nav-links">
-			<a href="{% url 'home' %}">หน้าแรก</a>
-			<a href="{% url 'bmi' %}">คำนวณ BMI</a>
-			<a href="{% url 'nutrition' %}">โภชนาการ</a>
-			<a href="{% url 'profile' %}">โปรไฟล์</a>
-			<a href="{% url 'login' %}">เข้าสู่ระบบ</a>
-			<a href="{% url 'register' %}">สมัครสมาชิก</a>
-			
-		</div>
-		{% if user.is_authenticated %}
-		<div class="user-info">
-			<span class="username">👤 {{ user.username }}</span>
-			<a href="{% url 'logout' %}" class="logout-btn">ออกจากระบบ</a>
-		</div>
-		{% endif %}
-	</nav>
-	<main class="container">
-		{% block content %}{% endblock %}
-	</main>
+    <nav>
+        <div class="brand">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+            </a>
+        </div>
 
-	<footer>
-		<p>CodeFitKub © 2025 | พัฒนาด้วยความตั้งใจเพื่อสุขภาพที่ดี</p>
-	</footer>
+        <div class="menu-toggle">
+            <span></span><span></span><span></span>
+        </div>
 
-	{% block extra_scripts %}{% endblock %}
+        <div class="nav-links">
+            <a href="{% url 'home' %}">หน้าแรก</a>
+            <a href="{% url 'bmi' %}">คำนวณ BMI</a>
+            <a href="{% url 'nutrition' %}">โภชนาการ</a>
+            <a href="{% url 'profile' %}">โปรไฟล์</a>
+
+            {% if user.is_authenticated %}
+            <div class="user-info">
+                <span class="username">{{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="logout-btn">ออกจากระบบ</a>
+            </div>
+            {% else %}
+            <a href="{% url 'login' %}">เข้าสู่ระบบ</a>
+            <a href="{% url 'register' %}" class="primary">สมัครสมาชิก</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        © 2025 CodeFitKub | สร้างเพื่อสุขภาพที่ดีกว่า 💚
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
