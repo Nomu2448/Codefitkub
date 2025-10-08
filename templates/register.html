@@ -1,119 +1,123 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}สมัครสมาชิก - CodeFitKub{% endblock %}
+<!DOCTYPE html>
+<html lang="th">
 
-{% block extra_head %}
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครสมาชิก- CodeFitKub</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
-
-    body {
-        background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
-    }
-
-    .register-container {
-        max-width: 420px;
-        margin: 50px auto;
-        background: #fff;
-        border-radius: 25px;
-        box-shadow: 0 0 25px rgba(0,0,0,.2);
-        padding: 40px 35px;
-        text-align: center;
-        transition: .3s ease;
-    }
-
-    .register-container:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 30px rgba(0,0,0,.25);
-    }
-
-    .register-container h1 {
-        font-size: 30px;
-        color: #333;
-        margin-bottom: 25px;
-    }
-
-    .form-group {
-        text-align: left;
-        margin-bottom: 18px;
-    }
-
-    .form-group label {
-        font-weight: 600;
-        color: #333;
-        display: block;
-        margin-bottom: 6px;
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: 12px 15px;
-        border-radius: 10px;
-        border: none;
-        background: #eee;
-        outline: none;
-        font-size: 15px;
-        color: #333;
-        transition: 0.3s;
-    }
-
-    .form-group input:focus {
-        background: #e6ebff;
-        box-shadow: 0 0 0 2px #7494ec inset;
-    }
-
-    button {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        background: #7494ec;
-        color: #fff;
-        font-weight: 600;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.25s;
-        font-size: 16px;
-        margin-top: 5px;
-    }
-
-    button:hover {
-        background: #5f7ae2;
-    }
-
-    .switch {
-        text-align: center;
-        margin-top: 18px;
-        color: #333;
-        font-size: 14px;
-    }
-
-    .switch a {
-        color: #7494ec;
-        font-weight: 600;
-        text-decoration: none;
-    }
-
-    .switch a:hover {
-        text-decoration: underline;
-    }
-
-    @media screen and (max-width: 480px) {
-        .register-container {
-            margin: 30px 20px;
-            padding: 30px 25px;
-            border-radius: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
         }
-    }
-</style>
-{% endblock %}
 
-{% block content %}
+        body {
+            background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
+        }
+
+        .register-container {
+            max-width: 420px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+            padding: 40px 35px;
+            text-align: center;
+            transition: .3s ease;
+        }
+
+        .register-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, .25);
+        }
+
+        .register-container h1 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: none;
+            background: #eee;
+            outline: none;
+            font-size: 15px;
+            color: #333;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            background: #e6ebff;
+            box-shadow: 0 0 0 2px #7494ec inset;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #7494ec;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.25s;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #5f7ae2;
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 18px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .switch a {
+            color: #7494ec;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .switch a:hover {
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 480px) {
+            .register-container {
+                margin: 30px 20px;
+                padding: 30px 25px;
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+
 <div class="register-container">
     <h1>สมัครสมาชิก</h1>
 
@@ -158,4 +162,5 @@
         });
     });
 </script>
-{% endblock %}
+
+</html>
