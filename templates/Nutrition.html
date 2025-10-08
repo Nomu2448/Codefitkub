@@ -342,5 +342,21 @@ a<h1>🧠 ความรู้โภชนาการและการออ�
     </div>
 </div>
 
+<script>
+    function goBack(e) {
+        e.preventDefault();
+        document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+        document.getElementById("topicMenu").style.display = "grid";
+    }
 
+    document.querySelectorAll(".topic-card").forEach(card => {
+        card.addEventListener("click", () => {
+            const target = card.dataset.target;
+            document.getElementById("topicMenu").style.display = "none";
+            document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+            document.getElementById(target).classList.add("active");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+</script>
 {% endblock %}
