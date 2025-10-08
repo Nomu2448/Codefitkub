@@ -1,157 +1,160 @@
----
-
-# 🌸 CodeFitKub
-
-## แพลตฟอร์มดิจิทัลสำหรับการดูแลสุขภาพและฟิตเนส ที่ช่วยให้คุณมีสุขภาพที่ดีขึ้น
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Made with❤️](https://img.shields.io/badge/Made%20with-❤️-pink.svg)](https://github.com/Nomu2448/Codefitkub)
+<!-- 🌤 แบนเนอร์แนวสุขภาพ -->
+<p align="center">
+  <img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1600&q=80" 
+       alt="CodeFitKub Banner" 
+       style="border-radius:15px; width:100%; max-height:350px; object-fit:cover;">
+</p>
 
 ---
 
-## 👩‍💻 สมาชิกผู้พัฒนา
+# 🩵 CodeFitKub
 
-- 👦 **นายนนทพัทธ์ นะทีศรี** — 6712732108
-- 👦 **นายวทัญญู ช่างเกวียน** — 6712732117
-- 👩 **นางสาวจีรนันท์ เกิดกล้า** — 6712732121
-- 👦 **นายนิลรักษ์ บุตรโพธิ์ศรี** — 6712732130
+> **แพลตฟอร์มสุขภาพและฟิตเนสออนไลน์**  
+> ที่ช่วยให้คุณคำนวณ BMI, ดูข้อมูลโภชนาการ และติดตามพัฒนาการของสุขภาพได้ง่าย ๆ  
+> 💙 สุขภาพดี เริ่มต้นได้ที่นี่!
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Made with ❤️](https://img.shields.io/badge/Made%20with-❤️-pink.svg)](https://github.com/Nomu2448/Codefitkub)
+[![Build with Django](https://img.shields.io/badge/Build%20with-Django-green.svg)](https://www.djangoproject.com/)
+[![Deploy on Vercel](https://img.shields.io/badge/Deploy-Vercel-black.svg)](https://vercel.com)
+
+---
+
+## 👩‍💻 ทีมผู้พัฒนา
+
+| ชื่อ | รหัสนักศึกษา |
+|------|----------------|
+| 👦 นายนนทพัทธ์ นะทีศรี | 6712732108 |
+| 👦 นายวทัญญู ช่างเกวียน | 6712732117 |
+| 👩 นางสาวจีรนันท์ เกิดกล้า | 6712732121 |
+| 👦 นายนิลรักษ์ บุตรโพธิ์ศรี | 6712732130 |
 
 ---
 
 ## 📖 เกี่ยวกับโปรเจกต์
 
-✨ **CodeFitKub** เป็นแพลตฟอร์มออนไลน์ที่พัฒนาขึ้นเพื่อช่วยให้ผู้ใช้สามารถติดตามและดูแลสุขภาพของตนเองได้อย่างมีประสิทธิภาพ
-เป็นเสมือน _เพื่อนคู่คิดด้านสุขภาพ_ ที่จะช่วยคำนวณค่า BMI และให้คำแนะนำด้านโภชนาการ 🏃‍♂️🥗
+**CodeFitKub** เป็นเว็บแอปพลิเคชันที่ถูกพัฒนาด้วย Django Framework  
+เพื่อช่วยให้ผู้ใช้งานสามารถติดตามสุขภาพของตนเองได้อย่างง่ายดาย  
+เช่น การคำนวณ BMI, การรับคำแนะนำด้านโภชนาการ, และการจัดการโปรไฟล์ส่วนตัว  
+
+ออกแบบให้ **ใช้งานได้ทุกอุปกรณ์** (Responsive Design)  
+และเน้นความปลอดภัยของข้อมูลผู้ใช้เป็นหลัก 🔒
 
 ---
 
 ## ✨ ฟีเจอร์หลัก
 
-- 📊 **เครื่องคำนวณ BMI** — คำนวณและแปลผลค่าดัชนีมวลกาย
-- 🥗 **ข้อมูลโภชนาการ** — คำแนะนำด้านอาหารและโภชนาการ
-- 👤 **ระบบสมาชิก** — ลงทะเบียนและเข้าสู่ระบบ
-- 📱 **Responsive Design** — ใช้งานได้ทุกอุปกรณ์
-- 📈 **ติดตามพัฒนาการ** — บันทึกและดูความเปลี่ยนแปลง
-- 🔐 **ความปลอดภัย** — ระบบรักษาความปลอดภัยข้อมูล
+- 📊 **คำนวณค่า BMI** — แสดงผลและแนะนำตามเกณฑ์สุขภาพ  
+- 🥗 **ข้อมูลโภชนาการ** — แนะนำอาหารตามผลลัพธ์ BMI  
+- 👤 **ระบบสมาชิก** — สมัคร / เข้าสู่ระบบ / โปรไฟล์ส่วนตัว  
+- 📈 **บันทึกพัฒนาการสุขภาพ** — ดูการเปลี่ยนแปลงของร่างกาย  
+- 📱 **Responsive Design** — ใช้งานได้บนมือถือและคอมพิวเตอร์  
+- 🔒 **ระบบความปลอดภัย** — ใช้ Django Auth และการเข้ารหัส  
 
-## โครงสร้างโปรเจค
+---
 
-```
+## 🛠 เทคโนโลยีที่ใช้
+
+| หมวด | เทคโนโลยี |
+|-------|-------------|
+| 🐍 Backend | Python 3.13, Django 5.2.7 |
+| 💾 Database | PostgreSQL (ผ่าน Supabase) |
+| 🎨 Frontend | HTML5, CSS3, JavaScript |
+| ☁️ Hosting | Vercel |
+| ⚙️ Tools | Git, Virtual Environment |
+
+---
+
+## 📁 โครงสร้างโปรเจกต์
+
 Codefitkub/
-├── Codefitkub/              # โฟลเดอร์การตั้งค่าโปรเจค
-│   ├── settings.py          # การตั้งค่า Django
-│   ├── urls.py              # การกำหนด URL หลัก
-│   ├── wsgi.py             # การตั้งค่า WSGI
-│   └── asgi.py             # การตั้งค่า ASGI
-├── webpage/                 # โฟลเดอร์แอปพลิเคชันหลัก
-│   ├── views.py            # ฟังก์ชันควบคุมการแสดงผล
-│   ├── models.py           # โมเดลฐานข้อมูล
-│   ├── urls.py             # การกำหนด URL ของแอปพลิเคชัน
-│   └── admin.py            # การตั้งค่าหน้าผู้ดูแลระบบ
-├── templates/              # เทมเพลต HTML
-│   ├── base.html          # เทมเพลตหลัก
-│   ├── home.html          # หน้าแรก
-│   ├── bmi.html           # หน้าคำนวณ BMI
-│   ├── login.html         # หน้าเข้าสู่ระบบ
-│   ├── register.html      # หน้าลงทะเบียน
-│   ├── profile.html       # หน้าโปรไฟล์
-│   └── Nutrition.html     # หน้าข้อมูลโภชนาการ
-├── statics/               # ไฟล์คงที่
-│   └── assets/
-│       └── img/          # รูปภาพ
-├── public/               # ไฟล์สาธารณะ
-├── manage.py            # สคริปต์จัดการ Django
-└── requirements.txt     # รายการแพ็คเกจที่จำเป็น
-```
+├── Codefitkub/ # การตั้งค่าโปรเจกต์ Django
+│ ├── settings.py
+│ ├── urls.py
+│ ├── wsgi.py
+│ └── asgi.py
+├── webpage/ # แอปหลัก
+│ ├── views.py
+│ ├── models.py
+│ ├── urls.py
+│ └── admin.py
+├── templates/ # HTML Templates
+│ ├── base.html
+│ ├── home.html
+│ ├── bmi.html
+│ ├── login.html
+│ ├── register.html
+│ ├── profile.html
+│ └── nutrition.html
+├── static/ # ไฟล์คงที่ เช่น CSS / JS / รูปภาพ
+│ └── img/
+├── manage.py
+└── requirements.txt
 
-## เทคโนโลยีที่ใช้
 
-- Python 3.13
-- Django 5.2.7
-- ฐานข้อมูล SQLite
-- HTML/CSS
-- PostgreSQL (psycopg2-binary)
+---
 
-## แพ็คเกจที่จำเป็น
+## ⚙️ การติดตั้งและใช้งาน
 
-แพ็คเกจหลักที่ใช้ในโปรเจค:
+### 1️⃣ สร้าง Virtual Environment
+```bash
+python -m venv env
 
-- Django==5.2.7
-- psycopg2-binary==2.9.10
-- asgiref==3.10.0
-- sqlparse==0.5.3
-- tzdata==2025.2
+2️⃣ เปิดใช้งาน Virtual Environment
 
-## การติดตั้งและการตั้งค่า
+Windows
+env\Scripts\activate
+macOS/Linux
+source env/bin/activate
 
-1. Create a virtual environment:
+3️⃣ ติดตั้งแพ็คเกจที่จำเป็น
+pip install -r requirements.txt
 
-   ```
-   python -m venv env
-   ```
+4️⃣ รันฐานข้อมูล
+python manage.py migrate
 
-2. Activate the virtual environment:
+5️⃣ เริ่มต้นเซิร์ฟเวอร์
+python manage.py runserver
 
-   - Windows:
-     ```
-     env\Scripts\activate
-     ```
-   - Unix or MacOS:
-     ```
-     source env/bin/activate
-     ```
+เปิดเบราว์เซอร์และเข้าที่ http://127.0.0.1:8000
 
-3. Install required packages:
+☁️ การ Deploy บน Vercel
 
-   ```
-   pip install -r requirements.txt
-   ```
+สมัครบัญชี Vercel
+ และเชื่อมต่อกับ GitHub
 
-4. Run migrations:
+เพิ่ม Environment Variables ที่จำเป็น เช่น:
 
-   ```
-   python manage.py migrate
-   ```
+DJANGO_SECRET_KEY
 
-5. Start the development server:
-   ```
-   python manage.py runserver
-   ```
+SUPABASE_URL
 
-## รายละเอียดฟีเจอร์
+SUPABASE_KEY
 
-### เครื่องคำนวณค่า BMI
+🤝 การมีส่วนร่วม (Contributing)
 
-- คำนวณค่าดัชนีมวลกาย (BMI)
-- แปลผลสถานะน้ำหนัก:
-  - น้ำหนักน้อย/ผอม: BMI < 18.5
-  - ปกติ: BMI 18.5-24.9
-  - น้ำหนักเกิน: BMI 25-29.9
-  - อ้วน: BMI ≥ 30
+Fork โปรเจกต์
 
-### ระบบผู้ใช้
+สร้าง branch ใหม่:
 
-- การลงทะเบียนผู้ใช้
-- การเข้าสู่ระบบ
-- การจัดการโปรไฟล์
+git checkout -b feature/ชื่อฟีเจอร์
 
-## คำอธิบายโครงสร้างไดเรกทอรี
 
-- `Codefitkub/`: เก็บการตั้งค่าและการกำหนดค่าของโปรเจค
-- `webpage/`: ไดเรกทอรีแอปพลิเคชันหลักที่มี views, models และตรรกะทางธุรกิจ
-- `templates/`: เทมเพลต HTML สำหรับส่วนติดต่อผู้ใช้
-- `statics/`: ไฟล์คงที่รวมถึงรูปภาพและทรัพยากรต่างๆ
-- `public/`: ไฟล์สาธารณะที่เข้าถึงได้จากเว็บ
-- `env/`: ไดเรกทอรี virtual environment (ไม่ถูกติดตามใน version control)
+Commit และ Push
 
-## การมีส่วนร่วมในการพัฒนา
+ส่ง Pull Request มาที่ repository หลัก
 
-1. Fork โปรเจค
-2. สร้าง branch สำหรับฟีเจอร์ของคุณ
-3. Commit การเปลี่ยนแปลง
-4. Push ไปยัง branch
-5. สร้าง Pull Request
+💡 แนวคิดการออกแบบ
 
-## ลิขสิทธิ์
+“สุขภาพดีไม่ใช่เรื่องยาก — ถ้ามีเครื่องมือดี ๆ อยู่ใกล้ตัว”
+CodeFitKub ถูกออกแบบให้ใช้งานง่าย สีฟ้า–ขาวให้ความรู้สึกสดชื่น
+สื่อถึงสุขภาพ ความสะอาด และพลังบวก 💙
 
-โปรเจคนี้เป็นโอเพนซอร์สและอยู่ภายใต้ลิขสิทธิ์ MIT License.
+<p align="center"> <img src="https://images.unsplash.com/photo-1571019613914-85f342c55f07?auto=format&fit=crop&w=1200&q=80" alt="Healthy Lifestyle Banner" style="border-radius:12px; max-width:90%; box-shadow:0 4px 15px rgba(0,0,0,0.1);"> </p>
+
+🔒 License
+
+โปรเจกต์นี้เผยแพร่ภายใต้ MIT License
+สามารถนำไปใช้ ปรับแต่ง หรือพัฒนาต่อยอดได้โดยอิสระ
+
+© 2025 — Developed with ❤️ by Team CodeFitKub
