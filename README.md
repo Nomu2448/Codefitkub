@@ -2,10 +2,6 @@
 <p align="center">
   <img width="2000" height="741" alt="otop_preview2" src="https://github.com/user-attachments/assets/22bad303-b3c6-4822-a627-9126a8930686" />  
 " 
-       alt="CodeFitKub Banner" 
-       style="border-radius:15px; width:100%; max-height:350px; object-fit:cover;">
-</p>
-
 ---
 
 # 🩵 CodeFitKub
