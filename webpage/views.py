@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'home.html')
 
+
 def bmi(request):
     bmi = None
     status = None
@@ -31,8 +32,10 @@ def bmi(request):
             status = 'ข้อมูลไม่ถูกต้อง'
     return render(request, 'bmi.html', {'bmi': bmi, 'status': status})
 
+
 def nutrition_view(request):
-    return render(request, 'nutrition.html')
+    return render(request, 'Nutrition.html')
+
 
 @login_required
 def profile(request):
@@ -74,7 +77,8 @@ def register_view(request):
             return render(request, 'register.html')
 
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'มีชื่อผู้ใช้นี้อยู่แล้ว โปรดเลือกชื่ออื่น')
+            messages.error(
+                request, 'มีชื่อผู้ใช้นี้อยู่แล้ว โปรดเลือกชื่ออื่น')
             return render(request, 'register.html')
 
         if User.objects.filter(email=email).exists():
@@ -82,7 +86,8 @@ def register_view(request):
             return render(request, 'register.html')
 
         # create user
-        user = User.objects.create_user(username=username, email=email, password=password)
+        user = User.objects.create_user(
+            username=username, email=email, password=password)
         user.save()
 
         # log the user in and redirect to home
@@ -97,4 +102,3 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'ออกจากระบบเรียบร้อยแล้ว')
     return redirect('login')
-
