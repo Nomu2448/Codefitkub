@@ -31,7 +31,7 @@ def bmi(request):
             status = 'ข้อมูลไม่ถูกต้อง'
     return render(request, 'bmi.html', {'bmi': bmi, 'status': status})
 
-def nutrition(request):
+def nutrition_view(request):
     return render(request, 'nutrition.html')
 
 @login_required
