@@ -1,6 +1,8 @@
 <!-- 🌤 แบนเนอร์แนวสุขภาพ -->
 <p align="center">
-<img width="1755" height="1008" alt="pw-web" src="https://github.com/user-attachments/assets/d05231f5-3b8f-4c2d-a35c-1779915002af" />
+<img width="1584" height="396" alt="3" src="https://github.com/user-attachments/assets/84e3c4ae-9ff8-424c-9cef-2bf2b630e18f" />
+<img width="1584" height="396" alt="1" src="https://github.com/user-attachments/assets/82213bdf-7eaa-4592-89d3-0334ac9ada3c" />
+<img width="1584" height="396" alt="2" src="https://github.com/user-attachments/assets/9a8d5e66-b654-476e-b2ec-b3c2d3342255" />
 
 
 # 🩵 CodeFitKub
