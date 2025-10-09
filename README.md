@@ -1,7 +1,8 @@
 <p align="center">
+  <img width="1584" alt="CodeFitKub Banner 3" src="https://github.com/user-attachments/assets/84e3c4ae-9ff8-424c-9cef-2bf2b630e18f" />
   <img width="1584" alt="CodeFitKub Banner 1" src="https://github.com/user-attachments/assets/82213bdf-7eaa-4592-89d3-0334ac9ada3c" />
   <img width="1584" alt="CodeFitKub Banner 2" src="https://github.com/user-attachments/assets/9a8d5e66-b654-476e-b2ec-b3c2d3342255" />
-  <img width="1584" alt="CodeFitKub Banner 3" src="https://github.com/user-attachments/assets/84e3c4ae-9ff8-424c-9cef-2bf2b630e18f" />
+ 
 </p>
 
 <h1 align="center">🩵 CodeFitKub</h1>
@@ -80,7 +81,7 @@ CodeFitKub ถูกออกแบบด้วยสีโทนฟ้า–ข
 
 ---
 
-## 🛠 เทคโนโลジีที่ใช้
+## 🛠 เทคโนโลยีที่ใช้
 
 | หมวด | เทคโนโลยี |
 |-------|-----------|
